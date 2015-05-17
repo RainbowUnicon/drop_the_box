@@ -1,0 +1,1341 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="13.2">
+  <zoom_level>7</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>350</x>
+      <y>798</y>
+      <w>147</w>
+      <h>133</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Interface&gt;&gt;
+Scene::Scene
+--
+_+WIDTH: int = 360_
+_+HEIGHT: int = 640_
+--
+/+draw()/
+/+update()/
+/+resize(width: int, height: int)/
+/+resume()/
+/+pause()/
+/+dispose()/
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>490</x>
+      <y>798</y>
+      <w>91</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>lt=()-
+m1=Disposable
+</panel_attributes>
+    <additional_attributes>110.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>350</x>
+      <y>952</y>
+      <w>147</w>
+      <h>133</h>
+    </coordinates>
+    <panel_attributes>/Scene::StagedScene/
+--
+-stage: Stage
+-table: Table
+--
+#getStage() : stage
+#getTable(): table</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>413</x>
+      <y>924</y>
+      <w>21</w>
+      <h>42</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;40.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>0</x>
+      <y>952</y>
+      <w>147</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>Scene:: LogoScene
+--
+create commAsset 
+&amp; game Asset 
+and attach them at DTB_App</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>140</x>
+      <y>959</y>
+      <w>224</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>300.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>420</x>
+      <y>728</y>
+      <w>35</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=0..1
+m2=1
+</panel_attributes>
+    <additional_attributes>10.0;100.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>0</x>
+      <y>1078</y>
+      <w>147</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>Scene::StartScene
+--
+add start button to start</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>0</x>
+      <y>1197</y>
+      <w>147</w>
+      <h>98</h>
+    </coordinates>
+    <panel_attributes>Scene::MainMenu
+--
+check ui design </panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>413</x>
+      <y>1204</y>
+      <w>147</w>
+      <h>105</h>
+    </coordinates>
+    <panel_attributes>Scene::SettingMenu
+--
+check ui design 
+change player's setting
+-volume
+-music
+-accelerator control</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>140</x>
+      <y>1071</y>
+      <w>224</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>300.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>140</x>
+      <y>1078</y>
+      <w>245</w>
+      <h>161</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>330.0;10.0;330.0;210.0;10.0;210.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>469</x>
+      <y>1078</y>
+      <w>21</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;180.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>350</x>
+      <y>588</y>
+      <w>147</w>
+      <h>147</h>
+    </coordinates>
+    <panel_attributes>dtb::DTB_App
+--
+-commAsset: AssetManager
+-gameAsset: AssetManager
+-currScene: Scene
+-playerData: PlayerData
+-setting: Setting
+--
++draw()
++update()
++resize(width: int, height: int)
++resume()
++pause()
++dispose()
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>168</x>
+      <y>588</y>
+      <w>147</w>
+      <h>147</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Data&gt;&gt;
+dfb::Setting
+--
+-useAccel: boolean
+-useMusic: boolean
+-useSound: boolean
+-senAccel: int
+-volMusic: int
+-volSound: int
+-themeName : String
+--
++default()
++getters &amp; setters
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>532</x>
+      <y>588</y>
+      <w>147</w>
+      <h>133</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Data&gt;&gt;
+Actor::PlayerData
+--
+-money: int
+-item: Item[]
+-skinName : String
+-levelHistory : LevelHistory[]
+--
++getters &amp; setters</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>490</x>
+      <y>588</y>
+      <w>56</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;60.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>532</x>
+      <y>413</y>
+      <w>147</w>
+      <h>133</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Data&gt;&gt;
+Actor::LevelHistory
+--
+-level : int
+-Name : String
+-highScore : int
+-star : int
+
+--
++getter &amp; setter
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>595</x>
+      <y>539</y>
+      <w>21</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;70.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1428</x>
+      <y>0</y>
+      <w>252</w>
+      <h>280</h>
+    </coordinates>
+    <panel_attributes>/Actor::Actor/
+--
+-body: Body
+-fixture: Fixture
+-texture: Texture
+-width, heigt: int
+-eventHandler: eventHandler
+-isSleeping: boolean
+-mask: int
+--
++update()
++draw()
++getter() &amp; setter()
++getType() : BodyType
++destroy(World world)
++sleep()
++wake()
++beginContact(fixture: Fixture)
++endContact(fixture: Fixture)
++preSolve(fixture: Fixture
++postSolve(fixture: Fixture)
+#fireEvent(event: Event)
+-createShape(width: int, height: int) : Shape
+-createFixtureDef(shape Shape) : FixtureDef
+-createBodyDef(bodyType: BodyType) : BodyDef
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1771</x>
+      <y>91</y>
+      <w>126</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>Platform::Platform
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1596</x>
+      <y>322</y>
+      <w>126</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>Item::item
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1652</x>
+      <y>273</y>
+      <w>21</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1330</x>
+      <y>140</y>
+      <w>112</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>140.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1379</x>
+      <y>343</y>
+      <w>147</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>Actor::Player
+--
+-leftMove: boolean
+-rightMove: boolean
+--
++getter() &amp; setter()
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1442</x>
+      <y>273</y>
+      <w>21</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;100.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1218</x>
+      <y>133</y>
+      <w>119</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>Entity::entity
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1197</x>
+      <y>1001</y>
+      <w>175</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>Scene::BackgroundLayer
+--
+-gs: GameScene
+-bgImg : Texture</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1211</x>
+      <y>623</y>
+      <w>182</w>
+      <h>98</h>
+    </coordinates>
+    <panel_attributes>Scene: ActorLayer
+--
+-gs: GameScene
+-world: World
+-floorManager: FloorManager
+-entityManager: EntityManager
+-player: Player</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1197</x>
+      <y>917</y>
+      <w>182</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>Scene:: DisplayLayer
+--
+-gs: GameScene
+-HEDs: ArrayList&lt;HeadOnDisplay&gt;
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1197</x>
+      <y>1120</y>
+      <w>175</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>Scene::GlassLayer
+--
+-gs:GameScene
+-
+-glassScene: glassScene</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>847</x>
+      <y>1288</y>
+      <w>147</w>
+      <h>133</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Interface&gt;&gt;
+Scene:Layer
+--
++init()
++reset()
++update()
++draw()
++resume()
++pause()
++dispose()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>868</x>
+      <y>637</y>
+      <w>364</w>
+      <h>364</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m1=1
+m2=1</panel_attributes>
+    <additional_attributes>10.0;490.0;280.0;490.0;290.0;10.0;500.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>868</x>
+      <y>896</y>
+      <w>343</w>
+      <h>105</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m1=1
+m2=1
+</panel_attributes>
+    <additional_attributes>10.0;120.0;280.0;120.0;300.0;10.0;470.0;40.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>868</x>
+      <y>973</y>
+      <w>343</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m1=1
+m2=1
+</panel_attributes>
+    <additional_attributes>10.0;10.0;280.0;10.0;290.0;70.0;470.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>868</x>
+      <y>973</y>
+      <w>343</w>
+      <h>182</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m1=1
+m2=1</panel_attributes>
+    <additional_attributes>10.0;10.0;280.0;10.0;290.0;230.0;470.0;230.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>749</x>
+      <y>1281</y>
+      <w>112</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>lt=()-
+m1=Disposable
+</panel_attributes>
+    <additional_attributes>10.0;20.0;140.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>728</x>
+      <y>903</y>
+      <w>147</w>
+      <h>203</h>
+    </coordinates>
+    <panel_attributes>Scene:: GameScene
+--
+-state : GameState
+-eventHandler: EventHandler
+-levelData: LevelData
+-levelAsset: LevelAsset
+-bLayer: BackgroundLayer
+-aLayer: ActorLayer
+-gLayer: GlassLayer
+-dLayer: DisplayerLayer
+
+--
+-init()
+-reset()
++getter &amp; setter
+#isWinningState() : boolean
+#isLosingState() : boolean
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>728</x>
+      <y>1148</y>
+      <w>147</w>
+      <h>98</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;enermuration&gt;&gt;
+Game::GameState
+--
+CountDown
+Running
+Lose
+Win
+Pause</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>791</x>
+      <y>1099</y>
+      <w>21</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>490</x>
+      <y>910</y>
+      <w>252</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;340.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>987</x>
+      <y>707</y>
+      <w>238</w>
+      <h>602</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;840.0;320.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>987</x>
+      <y>966</y>
+      <w>224</w>
+      <h>350</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;480.0;300.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>987</x>
+      <y>1050</y>
+      <w>224</w>
+      <h>287</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;390.0;300.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>987</x>
+      <y>1120</y>
+      <w>224</w>
+      <h>231</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;310.0;300.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1379</x>
+      <y>441</y>
+      <w>147</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>Actor::PlayerListener
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1442</x>
+      <y>406</y>
+      <w>21</w>
+      <h>49</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1645</x>
+      <y>1001</y>
+      <w>182</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>HeadOnDisplay:ItemBoardListener</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1295</x>
+      <y>714</y>
+      <w>21</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1568</x>
+      <y>623</y>
+      <w>189</w>
+      <h>161</h>
+    </coordinates>
+    <panel_attributes>Game::FloorManager
+--
+-aScene: ActorScene
+-floors: ArrayList&lt;Floor&gt;
+-flrDef: FloorDef
+-itemManager: ItemManager
+-platformManager: PlatformManager
+-pool : Pool
+--
++init()
++reset()
++update()
++draw
+-generate()
+-destory()
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1673</x>
+      <y>98</y>
+      <w>112</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;140.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1652</x>
+      <y>413</y>
+      <w>147</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Data&gt;&gt;
+Game::Floor
+--
+-items : ArrayList&lt;Item&gt;
+-platforms: ArrayList&lt;Platform&gt;
+-entities: ArrayList&lt;Entity&gt;
+--
++add(item Item)
+...
++remove(item Item)
+...
++contains(item Item)
+...</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1715</x>
+      <y>546</y>
+      <w>35</w>
+      <h>91</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=0..n</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;110.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1386</x>
+      <y>658</y>
+      <w>196</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=1
+</panel_attributes>
+    <additional_attributes>10.0;20.0;260.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1204</x>
+      <y>322</y>
+      <w>147</w>
+      <h>147</h>
+    </coordinates>
+    <panel_attributes>Game::EntityManager
+--
+-aScene: ActorScene
+-entities: ArrayList&lt;Entity&gt;
+-entityDef: EntityDef
+-pool: Pool
+--
++init()
++reset()
++update()
++draw
+-generate()
+-destory()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1288</x>
+      <y>462</y>
+      <w>21</w>
+      <h>175</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=1
+</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;230.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1281</x>
+      <y>161</y>
+      <w>21</w>
+      <h>175</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;230.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1799</x>
+      <y>588</y>
+      <w>147</w>
+      <h>91</h>
+    </coordinates>
+    <panel_attributes>Game::PlatformManager
+--
+-platformDef: PlatformDef
+-pool: Pool
+--
++generate() :Platform
++reset()
++dispose()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1799</x>
+      <y>714</y>
+      <w>147</w>
+      <h>98</h>
+    </coordinates>
+    <panel_attributes>Game:ItemManager
+--
+-itemDef: ItemDef
+-pool: Pool
+--
++generate(): Item
++reset()
++dispose()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1939</x>
+      <y>721</y>
+      <w>91</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>lt=()-
+m1=Disposable
+</panel_attributes>
+    <additional_attributes>110.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1939</x>
+      <y>595</y>
+      <w>91</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>lt=()-
+m1=Disposable
+</panel_attributes>
+    <additional_attributes>110.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1764</x>
+      <y>0</y>
+      <w>189</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Interface&gt;&gt;
+com.badlogic.gdx.utils.Pool.Poolable</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1673</x>
+      <y>7</y>
+      <w>105</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;130.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1379</x>
+      <y>490</y>
+      <w>147</w>
+      <h>42</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Interface&gt;&gt;
+com.badlogic.gdx.scenes
+.scene2d.InputListener</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1435</x>
+      <y>455</y>
+      <w>21</w>
+      <h>49</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1652</x>
+      <y>350</y>
+      <w>21</w>
+      <h>77</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;90.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1778</x>
+      <y>119</y>
+      <w>21</w>
+      <h>308</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;420.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1750</x>
+      <y>630</y>
+      <w>63</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;70.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1750</x>
+      <y>728</y>
+      <w>63</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;70.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>308</x>
+      <y>588</y>
+      <w>49</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>50.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>525</x>
+      <y>952</y>
+      <w>147</w>
+      <h>133</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Data&gt;&gt;
+Game:LevelData
+--
+-bunch of def
+--
++getter&amp; setters
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>728</x>
+      <y>735</y>
+      <w>147</w>
+      <h>133</h>
+    </coordinates>
+    <panel_attributes>Game: EventHandler
+--
+-queue: Queue
+--
++handle()
++clear()
++size(): int
++contains(event: Event): boolean
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>791</x>
+      <y>861</y>
+      <w>21</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>665</x>
+      <y>959</y>
+      <w>77</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>90.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1456</x>
+      <y>861</y>
+      <w>147</w>
+      <h>42</h>
+    </coordinates>
+    <panel_attributes>HeadOnDisplay::Timer
+--
+-tLeft: int
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1456</x>
+      <y>931</y>
+      <w>147</w>
+      <h>42</h>
+    </coordinates>
+    <panel_attributes>HeadOnDisplay::ScoreBoard
+--
+int Score
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1456</x>
+      <y>1001</y>
+      <w>147</w>
+      <h>42</h>
+    </coordinates>
+    <panel_attributes>HeadOnDisplay::ItemBoard
+--
+-items :Item[]</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1645</x>
+      <y>861</y>
+      <w>147</w>
+      <h>133</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Interface&gt;&gt;
+HeadOnDisplay:display
+--
+
+--
++draw()
++update()
++reset()
++dispose()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1372</x>
+      <y>868</y>
+      <w>98</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;80.0;120.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1372</x>
+      <y>931</y>
+      <w>98</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;120.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1372</x>
+      <y>945</y>
+      <w>98</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;120.0;100.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1596</x>
+      <y>875</y>
+      <w>63</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>70.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1589</x>
+      <y>889</y>
+      <w>70</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>80.0;10.0;10.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1596</x>
+      <y>931</y>
+      <w>63</w>
+      <h>91</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>70.0;10.0;10.0;110.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1211</x>
+      <y>770</y>
+      <w>182</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>Scene:: ContactListener</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1862</x>
+      <y>1001</y>
+      <w>147</w>
+      <h>42</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Interface&gt;&gt;
+com.badlogic.gdx.scenes
+.scene2d.InputListener</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1820</x>
+      <y>1008</y>
+      <w>56</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;60.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1596</x>
+      <y>1015</y>
+      <w>63</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;70.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1197</x>
+      <y>1232</y>
+      <w>175</w>
+      <h>91</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Interface&gt;&gt;
+GlassScene: glassScene
+--
++update()
++draw()
++dispose()
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1491</x>
+      <y>1169</y>
+      <w>147</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>GlassComp:: winScene</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1491</x>
+      <y>1218</y>
+      <w>147</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>GlassComp: loseScene</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1491</x>
+      <y>1120</y>
+      <w>147</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>GlassComp:: PauseScene</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1365</x>
+      <y>1127</y>
+      <w>140</w>
+      <h>133</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>180.0;10.0;10.0;170.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1365</x>
+      <y>1169</y>
+      <w>140</w>
+      <h>105</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>180.0;10.0;10.0;130.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1365</x>
+      <y>1218</y>
+      <w>140</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>180.0;10.0;10.0;80.0</additional_attributes>
+  </element>
+</diagram>
