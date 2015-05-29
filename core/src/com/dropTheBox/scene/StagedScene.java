@@ -87,6 +87,4 @@ public abstract class StagedScene implements Scene{
 	public Table getTable(){
 		return table;
 	}
-	
-	
 }

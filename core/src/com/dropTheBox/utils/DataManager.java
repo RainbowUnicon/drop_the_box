@@ -32,7 +32,7 @@ public abstract class DataManager {
 	 * @return Map<String, ?> return map that contains key and data 
 	 * @see Preferences#get()
 	 */
-	public Map<String, ?> get(){
+	public Map<String, ?> getMap(){
 		return prefs.get();
 	}
 	

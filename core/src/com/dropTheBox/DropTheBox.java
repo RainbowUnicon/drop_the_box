@@ -2,25 +2,23 @@ package com.dropTheBox;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.assets.AssetManager;
-import com.dropTheBox.actor.player.PlayerData;
+import com.dropTheBox.game.actor.player.PlayerData;
 import com.dropTheBox.scene.LogoScene;
 import com.dropTheBox.scene.Scene;
-import com.dropTheBox.utils.SettingData;
+import com.dropTheBox.utils.GenSettings;
 
 public class DropTheBox extends ApplicationAdapter {
 	private Scene scene;
-	private AssetManager commonAsset;
-	private AssetManager gameAsset;
-	private SettingData  setting;
+	private AssetManager assMan;
+	private GenSettings  setting;
 	private PlayerData   playerData;
 	
 	@Override
 	public void create () {
-		scene = new LogoScene(this);
-		commonAsset = new AssetManager();
-		gameAsset   = new AssetManager();
-		setting     = new SettingData();
+		assMan = new AssetManager();
+		setting     = new GenSettings();
 		playerData  = new PlayerData();
+		scene = new LogoScene(this);
 	}
 
 	@Override
@@ -47,8 +45,7 @@ public class DropTheBox extends ApplicationAdapter {
 	@Override
 	public void dispose(){
 		scene.dispose();
-		commonAsset.dispose();
-		gameAsset.dispose();
+		assMan.dispose();
 	}
 	
 	public Scene getScene() {
@@ -59,15 +56,12 @@ public class DropTheBox extends ApplicationAdapter {
 		this.scene = scene;
 	}
 
-	public AssetManager getCommonAsset() {
-		return commonAsset;
+	public AssetManager getAssMan() {
+		return assMan;
 	}
 
-	public AssetManager getGameAsset() {
-		return gameAsset;
-	}
 
-	public SettingData getSetting() {
+	public GenSettings getSettings() {
 		return setting;
 	}
 
