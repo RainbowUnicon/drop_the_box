@@ -14,15 +14,13 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
  *
  */
 public abstract class StagedScene implements Scene{
-	public final int WORLDWIDTH  = 360;
-	public final int WORLDHEIGHT = 640;
 	
 	private final Stage stage;
 	private final Table table;
 	
 	public StagedScene(){
 		//create a stage with stretch viewport
-		stage = new Stage(new StretchViewport(WORLDWIDTH,WORLDHEIGHT));
+		stage = new Stage(new StretchViewport(WIDTH,HEIGHT));
 		Gdx.input.setInputProcessor(stage);
 		
 		//create table to locate the buttons

@@ -4,34 +4,22 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.dropTheBox.scene.GameScene;
 
 public class GlassLayer extends Layer {
-	private final GameScene gs;
 	
 	public GlassLayer(GameScene scene){
-		gs = scene;
-	}
-	
-	@Override
-	public void update() {
-		// TODO Auto-generated method stub
-
+		super(scene);
 	}
 
 	@Override
-	public void draw(SpriteBatch batch) {
+	public void act(float dt) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
-	public void resume() {
+	public void draw() {
 		// TODO Auto-generated method stub
-
+		
 	}
 
-	@Override
-	public void pause() {
-		// TODO Auto-generated method stub
-
-	}
 
 }

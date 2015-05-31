@@ -29,7 +29,7 @@ public class SettingsScene extends StagedScene {
 		
 		//Listener
 		Listener listener = new Listener();
-		
+		//TODO catch back key
 		
 		//create Styles
 		Label.LabelStyle labelStyle = new Label.LabelStyle();

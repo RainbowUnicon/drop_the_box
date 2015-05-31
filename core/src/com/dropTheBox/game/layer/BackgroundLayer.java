@@ -4,34 +4,22 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.dropTheBox.scene.GameScene;
 
 public class BackgroundLayer extends Layer{
-	private final GameScene gs;
 	
 	public BackgroundLayer(GameScene scene){
-		gs = scene;
+		super(scene);
+	}
+
+	@Override
+	public void act(float dt) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void draw() {
+		// TODO Auto-generated method stub
+		
 	}
 	
-	@Override
-	public void update() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void draw(SpriteBatch batch) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void resume() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void pause() {
-		// TODO Auto-generated method stub
-		
-	}
 
 }

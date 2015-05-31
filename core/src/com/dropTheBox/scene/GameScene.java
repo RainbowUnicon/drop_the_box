@@ -1,9 +1,14 @@
 package com.dropTheBox.scene;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.dropTheBox.DropTheBox;
-import com.dropTheBox.game.EventHandler;
 import com.dropTheBox.game.LevelData;
 import com.dropTheBox.game.layer.ActorLayer;
 import com.dropTheBox.game.layer.BackgroundLayer;
@@ -12,8 +17,6 @@ import com.dropTheBox.game.layer.GlassLayer;
 
 public class GameScene implements Scene {
 	private final DropTheBox dtb;
-	private final EventHandler handler;
-	
 
 	private final LevelData levelData;
 	private final AssetManager levelAsset;
@@ -24,68 +27,68 @@ public class GameScene implements Scene {
 	private final GlassLayer gLayer;
 	
 	private GameState state;
-	private SpriteBatch batch;
 	
 	public GameScene(DropTheBox _dtb, LevelData data){
 		dtb = _dtb;
-		handler = new EventHandler();
 		levelData = data;
 		levelAsset = new AssetManager();
+		state = GameState.Running; //TODO change it to CountDown
 		
 		aLayer = new ActorLayer(this);
 		bLayer = new BackgroundLayer(this);
 		dLayer = new DisplayLayer(this);
 		gLayer = new GlassLayer(this);
 		
-		state = GameState.CountDown;
-		batch = new SpriteBatch();
-		
+		InputMultiplexer multiplexer = new InputMultiplexer();
+		multiplexer.addProcessor(bLayer.getStage());
+		multiplexer.addProcessor(aLayer.getStage());
+		multiplexer.addProcessor(dLayer.getStage());
+		multiplexer.addProcessor(gLayer.getStage());
+		Gdx.input.setInputProcessor(multiplexer);
+		Gdx.input.setCatchBackKey(true); 
 	}
+	
 	@Override
 	public void update() {
-		aLayer.update();
-		bLayer.update();
-		dLayer.update();
-		gLayer.update();
+		float dt = Gdx.graphics.getDeltaTime();
+		aLayer.act(dt);
+		bLayer.act(dt);
+		dLayer.act(dt);
+		gLayer.act(dt);
 	}
 
 	@Override
 	public void draw() {
-		batch.begin();
-		aLayer.draw(batch);
-		bLayer.draw(batch);
-		dLayer.draw(batch);
-		gLayer.draw(batch);
-		batch.end();
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		aLayer.draw();
+		bLayer.draw();
+		dLayer.draw();
+		gLayer.draw();
 	}
 
 	@Override
 	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	public void resume() {
-		aLayer.resume();
-		bLayer.resume();
-		dLayer.resume();
-		gLayer.resume();
+		state = GameState.Pause;
 	}
 
 	@Override
 	public void pause() {
-		aLayer.pause();
-		bLayer.pause();
-		dLayer.pause();
-		gLayer.pause();
+		state = GameState.Running;
 	}
 
 	@Override
 	public void dispose() {
+		Gdx.input.setCatchBackKey(false); 
 		aLayer.dispose();
 		bLayer.dispose();
 		dLayer.dispose();
 		gLayer.dispose();
+		levelAsset.dispose();
 	}
 	
 	public void reset(){
@@ -97,9 +100,6 @@ public class GameScene implements Scene {
 	}
 	public void setState(GameState state) {
 		this.state = state;
-	}
-	public EventHandler getHandler() {
-		return handler;
 	}
 	public LevelData getLevelData() {
 		return levelData;

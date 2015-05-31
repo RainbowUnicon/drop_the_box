@@ -5,7 +5,7 @@
     <id>UMLClass</id>
     <coordinates>
       <x>588</x>
-      <y>798</y>
+      <y>812</y>
       <w>147</w>
       <h>133</h>
     </coordinates>
@@ -30,7 +30,7 @@ _+HEIGHT: int = 640_
     <id>Relation</id>
     <coordinates>
       <x>728</x>
-      <y>791</y>
+      <y>805</y>
       <w>91</w>
       <h>35</h>
     </coordinates>
@@ -43,7 +43,7 @@ m1=Disposable
     <id>UMLClass</id>
     <coordinates>
       <x>588</x>
-      <y>952</y>
+      <y>966</y>
       <w>147</w>
       <h>133</h>
     </coordinates>
@@ -60,7 +60,7 @@ m1=Disposable
     <id>Relation</id>
     <coordinates>
       <x>651</x>
-      <y>924</y>
+      <y>938</y>
       <w>21</w>
       <h>42</h>
     </coordinates>
@@ -71,7 +71,7 @@ m1=Disposable
     <id>UMLClass</id>
     <coordinates>
       <x>280</x>
-      <y>868</y>
+      <y>882</y>
       <w>147</w>
       <h>119</h>
     </coordinates>
@@ -86,7 +86,7 @@ and attach them at DTB_App</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>420</x>
-      <y>959</y>
+      <y>973</y>
       <w>182</w>
       <h>21</h>
     </coordinates>
@@ -97,7 +97,7 @@ and attach them at DTB_App</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>658</x>
-      <y>728</y>
+      <y>742</y>
       <w>35</w>
       <h>84</h>
     </coordinates>
@@ -111,7 +111,7 @@ m2=1
     <id>UMLClass</id>
     <coordinates>
       <x>280</x>
-      <y>1043</y>
+      <y>1057</y>
       <w>147</w>
       <h>91</h>
     </coordinates>
@@ -124,7 +124,7 @@ add start button to start</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>329</x>
-      <y>1232</y>
+      <y>1246</y>
       <w>147</w>
       <h>98</h>
     </coordinates>
@@ -137,7 +137,7 @@ check ui design </panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>588</x>
-      <y>1127</y>
+      <y>1141</y>
       <w>147</w>
       <h>105</h>
     </coordinates>
@@ -154,7 +154,7 @@ change player's setting
     <id>Relation</id>
     <coordinates>
       <x>420</x>
-      <y>1050</y>
+      <y>1064</y>
       <w>182</w>
       <h>21</h>
     </coordinates>
@@ -165,7 +165,7 @@ change player's setting
     <id>Relation</id>
     <coordinates>
       <x>448</x>
-      <y>1064</y>
+      <y>1078</y>
       <w>154</w>
       <h>182</h>
     </coordinates>
@@ -176,7 +176,7 @@ change player's setting
     <id>Relation</id>
     <coordinates>
       <x>651</x>
-      <y>1078</y>
+      <y>1092</y>
       <w>21</w>
       <h>63</h>
     </coordinates>
@@ -187,7 +187,7 @@ change player's setting
     <id>UMLClass</id>
     <coordinates>
       <x>588</x>
-      <y>588</y>
+      <y>602</y>
       <w>147</w>
       <h>147</h>
     </coordinates>
@@ -212,7 +212,7 @@ change player's setting
     <id>UMLClass</id>
     <coordinates>
       <x>280</x>
-      <y>588</y>
+      <y>602</y>
       <w>147</w>
       <h>147</h>
     </coordinates>
@@ -237,7 +237,7 @@ dfb::Setting
     <id>UMLClass</id>
     <coordinates>
       <x>791</x>
-      <y>588</y>
+      <y>602</y>
       <w>147</w>
       <h>147</h>
     </coordinates>
@@ -256,7 +256,7 @@ player::PlayerData
     <id>Relation</id>
     <coordinates>
       <x>728</x>
-      <y>588</y>
+      <y>602</y>
       <w>77</w>
       <h>21</h>
     </coordinates>
@@ -267,7 +267,7 @@ player::PlayerData
     <id>UMLClass</id>
     <coordinates>
       <x>791</x>
-      <y>392</y>
+      <y>406</y>
       <w>147</w>
       <h>147</h>
     </coordinates>
@@ -289,7 +289,7 @@ playe::LevelHistory
     <id>Relation</id>
     <coordinates>
       <x>854</x>
-      <y>532</y>
+      <y>546</y>
       <w>21</w>
       <h>70</h>
     </coordinates>
@@ -302,33 +302,31 @@ playe::LevelHistory
       <x>1666</x>
       <y>0</y>
       <w>252</w>
-      <h>280</h>
+      <h>294</h>
     </coordinates>
-    <panel_attributes>/Actor::Actor/
+    <panel_attributes>/Actor::Base/
 --
 -body: Body
 -fixture: Fixture
--texture: Texture
--width, heigt: int
--eventHandler: eventHandler
--isSleeping: boolean
--mask: int
 --
-+update()
-+draw()
-+getter() &amp; setter()
-+getType() : BodyType
+/+update()/
+/+draw()/
+/#createShape() : Shape/
+/#createFixtureDef(shape Shape) : FixtureDef/
+/#createBodyDef()/
+
++getY() : int &amp;&amp; s
++getX() : int &amp;&amp; s
++getWidth() : int &amp;&amp; s
++getHeight() : int &amp;&amp; s
 +destroy(World world)
-+sleep()
-+wake()
+#fireEvent(event: Event)
+
 +beginContact(fixture: Fixture)
 +endContact(fixture: Fixture)
 +preSolve(fixture: Fixture
 +postSolve(fixture: Fixture)
-#fireEvent(event: Event)
--createShape(width: int, height: int) : Shape
--createFixtureDef(shape Shape) : FixtureDef
--createBodyDef(bodyType: BodyType) : BodyDef
+
 </panel_attributes>
     <additional_attributes/>
   </element>
@@ -336,7 +334,7 @@ playe::LevelHistory
     <id>UMLClass</id>
     <coordinates>
       <x>2009</x>
-      <y>91</y>
+      <y>105</y>
       <w>126</w>
       <h>35</h>
     </coordinates>
@@ -349,7 +347,7 @@ playe::LevelHistory
     <id>UMLClass</id>
     <coordinates>
       <x>1834</x>
-      <y>322</y>
+      <y>336</y>
       <w>126</w>
       <h>35</h>
     </coordinates>
@@ -361,7 +359,7 @@ playe::LevelHistory
     <id>Relation</id>
     <coordinates>
       <x>1890</x>
-      <y>273</y>
+      <y>287</y>
       <w>21</w>
       <h>63</h>
     </coordinates>
@@ -372,7 +370,7 @@ playe::LevelHistory
     <id>Relation</id>
     <coordinates>
       <x>1568</x>
-      <y>140</y>
+      <y>154</y>
       <w>112</w>
       <h>21</h>
     </coordinates>
@@ -383,7 +381,7 @@ playe::LevelHistory
     <id>UMLClass</id>
     <coordinates>
       <x>1617</x>
-      <y>343</y>
+      <y>357</y>
       <w>147</w>
       <h>70</h>
     </coordinates>
@@ -400,7 +398,7 @@ playe::LevelHistory
     <id>Relation</id>
     <coordinates>
       <x>1680</x>
-      <y>273</y>
+      <y>287</y>
       <w>21</w>
       <h>84</h>
     </coordinates>
@@ -411,7 +409,7 @@ playe::LevelHistory
     <id>UMLClass</id>
     <coordinates>
       <x>1456</x>
-      <y>133</y>
+      <y>147</y>
       <w>119</w>
       <h>35</h>
     </coordinates>
@@ -423,7 +421,7 @@ playe::LevelHistory
     <id>UMLClass</id>
     <coordinates>
       <x>1435</x>
-      <y>1001</y>
+      <y>1015</y>
       <w>175</w>
       <h>56</h>
     </coordinates>
@@ -437,7 +435,7 @@ playe::LevelHistory
     <id>UMLClass</id>
     <coordinates>
       <x>1435</x>
-      <y>616</y>
+      <y>630</y>
       <w>182</w>
       <h>98</h>
     </coordinates>
@@ -454,7 +452,7 @@ playe::LevelHistory
     <id>UMLClass</id>
     <coordinates>
       <x>1435</x>
-      <y>917</y>
+      <y>931</y>
       <w>182</w>
       <h>56</h>
     </coordinates>
@@ -470,7 +468,7 @@ playe::LevelHistory
     <id>UMLClass</id>
     <coordinates>
       <x>1435</x>
-      <y>1120</y>
+      <y>1134</y>
       <w>175</w>
       <h>63</h>
     </coordinates>
@@ -484,19 +482,14 @@ playe::LevelHistory
     <id>UMLClass</id>
     <coordinates>
       <x>1162</x>
-      <y>1288</y>
+      <y>1302</y>
       <w>147</w>
-      <h>133</h>
+      <h>77</h>
     </coordinates>
-    <panel_attributes>&lt;&lt;Interface&gt;&gt;
-Scene:Layer
+    <panel_attributes>/Layer::Layer/
 --
-+init()
-+reset()
-+update()
++act()
 +draw()
-+resume()
-+pause()
 +dispose()</panel_attributes>
     <additional_attributes/>
   </element>
@@ -504,7 +497,7 @@ Scene:Layer
     <id>Relation</id>
     <coordinates>
       <x>1218</x>
-      <y>630</y>
+      <y>644</y>
       <w>231</w>
       <h>203</h>
     </coordinates>
@@ -517,7 +510,7 @@ m2=1</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1211</x>
-      <y>931</y>
+      <y>945</y>
       <w>238</w>
       <h>217</h>
     </coordinates>
@@ -530,7 +523,7 @@ m2=1</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1064</x>
-      <y>1281</y>
+      <y>1295</y>
       <w>112</w>
       <h>35</h>
     </coordinates>
@@ -543,14 +536,13 @@ m1=Disposable
     <id>UMLClass</id>
     <coordinates>
       <x>1078</x>
-      <y>798</y>
+      <y>812</y>
       <w>147</w>
       <h>203</h>
     </coordinates>
     <panel_attributes>scene:: GameScene
 --
 -state : GameState
--eventHandler: EventHandler
 -levelData: LevelData
 -levelAsset: LevelAsset
 -bLayer: BackgroundLayer
@@ -571,7 +563,7 @@ m1=Disposable
     <id>UMLClass</id>
     <coordinates>
       <x>1078</x>
-      <y>1036</y>
+      <y>1050</y>
       <w>147</w>
       <h>98</h>
     </coordinates>
@@ -589,7 +581,7 @@ Pause</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1141</x>
-      <y>994</y>
+      <y>1008</y>
       <w>21</w>
       <h>56</h>
     </coordinates>
@@ -600,7 +592,7 @@ Pause</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>728</x>
-      <y>819</y>
+      <y>833</y>
       <w>364</w>
       <h>21</h>
     </coordinates>
@@ -611,7 +603,7 @@ Pause</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1302</x>
-      <y>700</y>
+      <y>714</y>
       <w>147</w>
       <h>609</h>
     </coordinates>
@@ -622,7 +614,7 @@ Pause</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1302</x>
-      <y>966</y>
+      <y>980</y>
       <w>147</w>
       <h>350</h>
     </coordinates>
@@ -633,7 +625,7 @@ Pause</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1302</x>
-      <y>1050</y>
+      <y>1064</y>
       <w>147</w>
       <h>287</h>
     </coordinates>
@@ -644,7 +636,7 @@ Pause</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1302</x>
-      <y>1120</y>
+      <y>1134</y>
       <w>147</w>
       <h>231</h>
     </coordinates>
@@ -655,7 +647,7 @@ Pause</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>1617</x>
-      <y>441</y>
+      <y>455</y>
       <w>147</w>
       <h>21</h>
     </coordinates>
@@ -667,7 +659,7 @@ Pause</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1680</x>
-      <y>406</y>
+      <y>420</y>
       <w>21</w>
       <h>49</h>
     </coordinates>
@@ -678,7 +670,7 @@ Pause</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>1883</x>
-      <y>1001</y>
+      <y>1015</y>
       <w>182</w>
       <h>35</h>
     </coordinates>
@@ -689,7 +681,7 @@ Pause</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1519</x>
-      <y>707</y>
+      <y>721</y>
       <w>21</w>
       <h>77</h>
     </coordinates>
@@ -700,7 +692,7 @@ Pause</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>1806</x>
-      <y>623</y>
+      <y>637</y>
       <w>189</w>
       <h>161</h>
     </coordinates>
@@ -726,7 +718,7 @@ Pause</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1911</x>
-      <y>98</y>
+      <y>112</y>
       <w>112</w>
       <h>21</h>
     </coordinates>
@@ -737,7 +729,7 @@ Pause</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>1890</x>
-      <y>413</y>
+      <y>427</y>
       <w>147</w>
       <h>140</h>
     </coordinates>
@@ -760,7 +752,7 @@ Game::Floor
     <id>Relation</id>
     <coordinates>
       <x>1953</x>
-      <y>546</y>
+      <y>560</y>
       <w>35</w>
       <h>91</h>
     </coordinates>
@@ -772,7 +764,7 @@ m1=0..n</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1610</x>
-      <y>651</y>
+      <y>665</y>
       <w>210</w>
       <h>35</h>
     </coordinates>
@@ -786,7 +778,7 @@ m2=1
     <id>UMLClass</id>
     <coordinates>
       <x>1442</x>
-      <y>322</y>
+      <y>336</y>
       <w>147</w>
       <h>147</h>
     </coordinates>
@@ -809,7 +801,7 @@ m2=1
     <id>Relation</id>
     <coordinates>
       <x>1526</x>
-      <y>462</y>
+      <y>476</y>
       <w>21</w>
       <h>168</h>
     </coordinates>
@@ -823,7 +815,7 @@ m2=1
     <id>Relation</id>
     <coordinates>
       <x>1519</x>
-      <y>161</y>
+      <y>175</y>
       <w>21</w>
       <h>175</h>
     </coordinates>
@@ -834,7 +826,7 @@ m2=1
     <id>UMLClass</id>
     <coordinates>
       <x>2037</x>
-      <y>588</y>
+      <y>602</y>
       <w>147</w>
       <h>91</h>
     </coordinates>
@@ -852,7 +844,7 @@ m2=1
     <id>UMLClass</id>
     <coordinates>
       <x>2037</x>
-      <y>714</y>
+      <y>728</y>
       <w>147</w>
       <h>98</h>
     </coordinates>
@@ -870,7 +862,7 @@ m2=1
     <id>Relation</id>
     <coordinates>
       <x>2177</x>
-      <y>721</y>
+      <y>735</y>
       <w>91</w>
       <h>35</h>
     </coordinates>
@@ -883,7 +875,7 @@ m1=Disposable
     <id>Relation</id>
     <coordinates>
       <x>2177</x>
-      <y>595</y>
+      <y>609</y>
       <w>91</w>
       <h>35</h>
     </coordinates>
@@ -895,9 +887,9 @@ m1=Disposable
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>2002</x>
-      <y>0</y>
-      <w>189</w>
+      <x>2009</x>
+      <y>35</y>
+      <w>210</w>
       <h>28</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Interface&gt;&gt;
@@ -908,18 +900,18 @@ com.badlogic.gdx.utils.Pool.Poolable</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1911</x>
-      <y>7</y>
-      <w>105</w>
+      <y>42</y>
+      <w>112</w>
       <h>21</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>10.0;10.0;130.0;10.0</additional_attributes>
+    <additional_attributes>10.0;10.0;140.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
       <x>1617</x>
-      <y>490</y>
+      <y>504</y>
       <w>147</w>
       <h>42</h>
     </coordinates>
@@ -932,7 +924,7 @@ com.badlogic.gdx.scenes
     <id>Relation</id>
     <coordinates>
       <x>1673</x>
-      <y>455</y>
+      <y>469</y>
       <w>21</w>
       <h>49</h>
     </coordinates>
@@ -943,7 +935,7 @@ com.badlogic.gdx.scenes
     <id>Relation</id>
     <coordinates>
       <x>1890</x>
-      <y>350</y>
+      <y>364</y>
       <w>21</w>
       <h>77</h>
     </coordinates>
@@ -954,7 +946,7 @@ com.badlogic.gdx.scenes
     <id>Relation</id>
     <coordinates>
       <x>2016</x>
-      <y>119</y>
+      <y>133</y>
       <w>21</w>
       <h>308</h>
     </coordinates>
@@ -965,7 +957,7 @@ com.badlogic.gdx.scenes
     <id>Relation</id>
     <coordinates>
       <x>1988</x>
-      <y>630</y>
+      <y>644</y>
       <w>63</w>
       <h>21</h>
     </coordinates>
@@ -976,7 +968,7 @@ com.badlogic.gdx.scenes
     <id>Relation</id>
     <coordinates>
       <x>1988</x>
-      <y>728</y>
+      <y>742</y>
       <w>63</w>
       <h>21</h>
     </coordinates>
@@ -987,7 +979,7 @@ com.badlogic.gdx.scenes
     <id>Relation</id>
     <coordinates>
       <x>420</x>
-      <y>588</y>
+      <y>602</y>
       <w>182</w>
       <h>21</h>
     </coordinates>
@@ -998,7 +990,7 @@ com.badlogic.gdx.scenes
     <id>UMLClass</id>
     <coordinates>
       <x>1078</x>
-      <y>602</y>
+      <y>616</y>
       <w>147</w>
       <h>133</h>
     </coordinates>
@@ -1012,41 +1004,10 @@ game:LevelData
     <additional_attributes/>
   </element>
   <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>854</x>
-      <y>854</y>
-      <w>168</w>
-      <h>133</h>
-    </coordinates>
-    <panel_attributes>game: EventHandler
---
--queue: Queue
---
-+handle()
-+add(Event event)
-+clear()
-+size(): int
-+isEmpty() : boolean
-+contains(event: Event): boolean</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>1015</x>
-      <y>868</y>
-      <w>77</w>
-      <h>21</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
-    <additional_attributes>90.0;10.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
     <id>Relation</id>
     <coordinates>
       <x>1141</x>
-      <y>728</y>
+      <y>742</y>
       <w>21</w>
       <h>84</h>
     </coordinates>
@@ -1057,7 +1018,7 @@ game:LevelData
     <id>UMLClass</id>
     <coordinates>
       <x>1694</x>
-      <y>861</y>
+      <y>875</y>
       <w>147</w>
       <h>42</h>
     </coordinates>
@@ -1071,7 +1032,7 @@ game:LevelData
     <id>UMLClass</id>
     <coordinates>
       <x>1694</x>
-      <y>931</y>
+      <y>945</y>
       <w>147</w>
       <h>42</h>
     </coordinates>
@@ -1085,7 +1046,7 @@ int Score
     <id>UMLClass</id>
     <coordinates>
       <x>1694</x>
-      <y>1001</y>
+      <y>1015</y>
       <w>147</w>
       <h>42</h>
     </coordinates>
@@ -1098,17 +1059,14 @@ int Score
     <id>UMLClass</id>
     <coordinates>
       <x>1883</x>
-      <y>861</y>
+      <y>875</y>
       <w>147</w>
       <h>133</h>
     </coordinates>
-    <panel_attributes>&lt;&lt;Interface&gt;&gt;
-HeadOnDisplay:display
---
-
+    <panel_attributes>HeadOnDisplay:display
 --
 +draw()
-+update()
++act()
 +reset()
 +dispose()</panel_attributes>
     <additional_attributes/>
@@ -1117,7 +1075,7 @@ HeadOnDisplay:display
     <id>Relation</id>
     <coordinates>
       <x>1610</x>
-      <y>868</y>
+      <y>882</y>
       <w>98</w>
       <h>70</h>
     </coordinates>
@@ -1128,7 +1086,7 @@ HeadOnDisplay:display
     <id>Relation</id>
     <coordinates>
       <x>1610</x>
-      <y>931</y>
+      <y>945</y>
       <w>98</w>
       <h>28</h>
     </coordinates>
@@ -1139,7 +1097,7 @@ HeadOnDisplay:display
     <id>Relation</id>
     <coordinates>
       <x>1610</x>
-      <y>945</y>
+      <y>959</y>
       <w>98</w>
       <h>84</h>
     </coordinates>
@@ -1150,7 +1108,7 @@ HeadOnDisplay:display
     <id>Relation</id>
     <coordinates>
       <x>1834</x>
-      <y>875</y>
+      <y>889</y>
       <w>63</w>
       <h>21</h>
     </coordinates>
@@ -1161,7 +1119,7 @@ HeadOnDisplay:display
     <id>Relation</id>
     <coordinates>
       <x>1827</x>
-      <y>889</y>
+      <y>903</y>
       <w>70</w>
       <h>70</h>
     </coordinates>
@@ -1172,7 +1130,7 @@ HeadOnDisplay:display
     <id>Relation</id>
     <coordinates>
       <x>1834</x>
-      <y>931</y>
+      <y>945</y>
       <w>63</w>
       <h>91</h>
     </coordinates>
@@ -1183,7 +1141,7 @@ HeadOnDisplay:display
     <id>UMLClass</id>
     <coordinates>
       <x>1435</x>
-      <y>770</y>
+      <y>784</y>
       <w>182</w>
       <h>35</h>
     </coordinates>
@@ -1194,7 +1152,7 @@ HeadOnDisplay:display
     <id>UMLClass</id>
     <coordinates>
       <x>2100</x>
-      <y>1001</y>
+      <y>1015</y>
       <w>147</w>
       <h>42</h>
     </coordinates>
@@ -1207,7 +1165,7 @@ com.badlogic.gdx.scenes
     <id>Relation</id>
     <coordinates>
       <x>2058</x>
-      <y>1008</y>
+      <y>1022</y>
       <w>56</w>
       <h>21</h>
     </coordinates>
@@ -1218,7 +1176,7 @@ com.badlogic.gdx.scenes
     <id>Relation</id>
     <coordinates>
       <x>1834</x>
-      <y>1015</y>
+      <y>1029</y>
       <w>63</w>
       <h>21</h>
     </coordinates>
@@ -1229,7 +1187,7 @@ com.badlogic.gdx.scenes
     <id>UMLClass</id>
     <coordinates>
       <x>1435</x>
-      <y>1232</y>
+      <y>1246</y>
       <w>175</w>
       <h>91</h>
     </coordinates>
@@ -1246,7 +1204,7 @@ GlassScene: glassScene
     <id>UMLClass</id>
     <coordinates>
       <x>1729</x>
-      <y>1169</y>
+      <y>1183</y>
       <w>147</w>
       <h>28</h>
     </coordinates>
@@ -1257,7 +1215,7 @@ GlassScene: glassScene
     <id>UMLClass</id>
     <coordinates>
       <x>1729</x>
-      <y>1218</y>
+      <y>1232</y>
       <w>147</w>
       <h>28</h>
     </coordinates>
@@ -1268,7 +1226,7 @@ GlassScene: glassScene
     <id>UMLClass</id>
     <coordinates>
       <x>1729</x>
-      <y>1120</y>
+      <y>1134</y>
       <w>147</w>
       <h>28</h>
     </coordinates>
@@ -1279,7 +1237,7 @@ GlassScene: glassScene
     <id>Relation</id>
     <coordinates>
       <x>1603</x>
-      <y>1127</y>
+      <y>1141</y>
       <w>140</w>
       <h>133</h>
     </coordinates>
@@ -1290,7 +1248,7 @@ GlassScene: glassScene
     <id>Relation</id>
     <coordinates>
       <x>1603</x>
-      <y>1169</y>
+      <y>1183</y>
       <w>140</w>
       <h>105</h>
     </coordinates>
@@ -1301,7 +1259,7 @@ GlassScene: glassScene
     <id>Relation</id>
     <coordinates>
       <x>1603</x>
-      <y>1218</y>
+      <y>1232</y>
       <w>140</w>
       <h>70</h>
     </coordinates>
@@ -1312,7 +1270,7 @@ GlassScene: glassScene
     <id>UMLClass</id>
     <coordinates>
       <x>280</x>
-      <y>399</y>
+      <y>413</y>
       <w>147</w>
       <h>133</h>
     </coordinates>
@@ -1331,7 +1289,7 @@ GlassScene: glassScene
     <id>UMLClass</id>
     <coordinates>
       <x>0</x>
-      <y>868</y>
+      <y>882</y>
       <w>147</w>
       <h>119</h>
     </coordinates>
@@ -1350,7 +1308,7 @@ color: Color)
     <id>Relation</id>
     <coordinates>
       <x>140</x>
-      <y>924</y>
+      <y>938</y>
       <w>154</w>
       <h>35</h>
     </coordinates>
@@ -1364,7 +1322,7 @@ m2=1
     <id>UMLClass</id>
     <coordinates>
       <x>763</x>
-      <y>1232</y>
+      <y>1246</y>
       <w>147</w>
       <h>133</h>
     </coordinates>
@@ -1385,7 +1343,7 @@ Responsibilities
     <id>Relation</id>
     <coordinates>
       <x>350</x>
-      <y>980</y>
+      <y>994</y>
       <w>21</w>
       <h>77</h>
     </coordinates>
@@ -1396,7 +1354,7 @@ Responsibilities
     <id>Relation</id>
     <coordinates>
       <x>350</x>
-      <y>1127</y>
+      <y>1141</y>
       <w>21</w>
       <h>119</h>
     </coordinates>
@@ -1407,7 +1365,7 @@ Responsibilities
     <id>Relation</id>
     <coordinates>
       <x>469</x>
-      <y>1274</y>
+      <y>1288</y>
       <w>308</w>
       <h>21</h>
     </coordinates>
@@ -1418,7 +1376,7 @@ Responsibilities
     <id>Relation</id>
     <coordinates>
       <x>469</x>
-      <y>1141</y>
+      <y>1155</y>
       <w>133</w>
       <h>126</h>
     </coordinates>
@@ -1429,7 +1387,7 @@ Responsibilities
     <id>Relation</id>
     <coordinates>
       <x>791</x>
-      <y>833</y>
+      <y>847</y>
       <w>301</w>
       <h>413</h>
     </coordinates>
@@ -1440,7 +1398,7 @@ Responsibilities
     <id>Relation</id>
     <coordinates>
       <x>1218</x>
-      <y>875</y>
+      <y>889</y>
       <w>231</w>
       <h>147</h>
     </coordinates>
@@ -1454,7 +1412,7 @@ m2=1
     <id>Relation</id>
     <coordinates>
       <x>1218</x>
-      <y>840</y>
+      <y>854</y>
       <w>231</w>
       <h>98</h>
     </coordinates>
@@ -1463,5 +1421,94 @@ m1=1
 m2=1
 </panel_attributes>
     <additional_attributes>10.0;10.0;310.0;120.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2009</x>
+      <y>70</y>
+      <w>252</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Interface&gt;&gt;
+com.badlogic.gdx.physics.box2d.ContactListener</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1911</x>
+      <y>77</y>
+      <w>112</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;140.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2009</x>
+      <y>0</y>
+      <w>210</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>com.badlogic.gdx.scenes.scene2d.Actor</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1911</x>
+      <y>7</y>
+      <w>112</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;140.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2093</x>
+      <y>875</y>
+      <w>210</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>com.badlogic.gdx.scenes.scene2d.Actor</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>2023</x>
+      <y>875</y>
+      <w>84</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;100.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>924</x>
+      <y>1330</y>
+      <w>147</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>GlassComp:: winScene</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1064</x>
+      <y>1330</y>
+      <w>112</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;140.0;10.0</additional_attributes>
   </element>
 </diagram>
