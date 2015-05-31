@@ -4,10 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.dropTheBox.DropTheBox;
 import com.dropTheBox.game.LevelData;
 import com.dropTheBox.game.layer.ActorLayer;
@@ -34,16 +31,17 @@ public class GameScene implements Scene {
 		levelAsset = new AssetManager();
 		state = GameState.Running; //TODO change it to CountDown
 		
-		aLayer = new ActorLayer(this);
-		bLayer = new BackgroundLayer(this);
-		dLayer = new DisplayLayer(this);
-		gLayer = new GlassLayer(this);
+		SpriteBatch batch = new SpriteBatch();
+		aLayer = new ActorLayer(this, batch);
+		bLayer = new BackgroundLayer(this, batch);
+		dLayer = new DisplayLayer(this, batch);
+		gLayer = new GlassLayer(this, batch);
 		
 		InputMultiplexer multiplexer = new InputMultiplexer();
-		multiplexer.addProcessor(bLayer.getStage());
-		multiplexer.addProcessor(aLayer.getStage());
-		multiplexer.addProcessor(dLayer.getStage());
-		multiplexer.addProcessor(gLayer.getStage());
+		multiplexer.addProcessor(aLayer);
+		multiplexer.addProcessor(dLayer);
+		multiplexer.addProcessor(bLayer);
+		multiplexer.addProcessor(gLayer);
 		Gdx.input.setInputProcessor(multiplexer);
 		Gdx.input.setCatchBackKey(true); 
 	}

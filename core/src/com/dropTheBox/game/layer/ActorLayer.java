@@ -1,7 +1,9 @@
 package com.dropTheBox.game.layer;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.Contact;
@@ -16,30 +18,33 @@ import com.dropTheBox.scene.GameScene;
 import com.dropTheBox.scene.GameScene.GameState;
 
 public class ActorLayer extends Layer {
-	private final World world;
+	public static final float scale = 3f;
+	public final World world;
 	
-	public final static int WORLD_WIDTH = 120, WORLD_HEIGHT = 220;
 	
+	//TODO remove these
 	Platform p;
 	Player i;
 	Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
+	OrthographicCamera camera;
 	
-	public ActorLayer(GameScene scene){
-		super(scene);
+	public ActorLayer(GameScene scene, Batch batch){
+		super(scene, Layer.WIDTH, Layer.HEIGHT, batch);
 		world = new World(new Vector2(0, -10), true); 
 
 		Load.load(getAssets());
-
+		
+		camera = new OrthographicCamera(this.getViewport().getWorldWidth(),this.getViewport().getWorldHeight());
+        camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 0);
+        camera.update();
+        
 		p = new Platform(); //TODO remove these
 		p.init(this, 0, 0, 360, 25);
-		stage.addActor(p);
+		this.addActor(p);
 		
 		i = new Player();
-		
-		i.init(this,100, 100);
-		stage.addActor(i);
-		
-		
+		i.init(this,0, 620);
+		this.addActor(i);
 	}
 	
 	
@@ -48,20 +53,16 @@ public class ActorLayer extends Layer {
 	public void act(float dt) {
 		if(gs.getState() == GameState.Running){
 			world.step(dt, 6, 2);
-			stage.act();
+			super.act(dt);
 		}
 	}
 
 	@Override
 	public void draw() {
-		GameState state = gs.getState();
-		
+		GameState state = gs.getState();		
 		if(state == GameState.Running || state == GameState.CountDown || state == GameState.Pause)
-			stage.draw();
-	}
-
-	public World getWorld(){
-		return world;
+			super.draw();
+		debugRenderer.render(world, camera.combined);
 	}
 }
 

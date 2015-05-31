@@ -32,7 +32,7 @@ public abstract class Base extends com.badlogic.gdx.scenes.scene2d.Actor impleme
 		if(initialized){
 			setSize(w,h);
 		} else{
-			World world = layer.getWorld();
+			World world = layer.world;
 		
 			body = world.createBody(createBodyDef());
 
@@ -57,7 +57,7 @@ public abstract class Base extends com.badlogic.gdx.scenes.scene2d.Actor impleme
 	@Override
 	public void act(float dt){
 		super.setX(body.getPosition().x - getWidth()/2);
-		super.setY(body.getPosition().y + getHeight()/2);
+		super.setY(body.getPosition().y - getHeight()/2);
 		super.setRotation((float)Math.toDegrees(body.getAngle())); 
 	}
 
@@ -108,7 +108,7 @@ public abstract class Base extends com.badlogic.gdx.scenes.scene2d.Actor impleme
 	@Override
 	public void setPosition(float x, float y){
 		super.setPosition(x, y);
-		body.setTransform(x + getWidth()/2, y - getHeight()/2, body.getAngle());
+		body.setTransform(x + getWidth()/2, y + getHeight()/2, body.getAngle());
 	}
 	
 	@Override

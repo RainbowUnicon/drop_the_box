@@ -1,25 +1,12 @@
 package com.dropTheBox.game.layer;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.dropTheBox.scene.GameScene;
 
 public class BackgroundLayer extends Layer{
 	
-	public BackgroundLayer(GameScene scene){
-		super(scene);
+	public BackgroundLayer(GameScene scene, Batch batch){
+		super(scene,Layer.WIDTH, Layer.HEIGHT, batch);
 	}
-
-	@Override
-	public void act(float dt) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void draw() {
-		// TODO Auto-generated method stub
-		
-	}
-	
 
 }

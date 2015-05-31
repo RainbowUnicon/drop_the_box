@@ -1,35 +1,25 @@
 package com.dropTheBox.game.layer;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.dropTheBox.scene.GameScene;
 import com.dropTheBox.scene.Scene;
 
-public abstract class Layer implements Disposable {
-	protected final GameScene gs;
-	protected final Stage stage;
+public abstract class Layer extends Stage {
+	public static final int WIDTH 	= Scene.WIDTH;
+	public static final int HEIGHT = Scene.HEIGHT;
 	
-	public Layer(GameScene scene){
-		gs = scene;
-		stage = new Stage(new StretchViewport(Scene.WIDTH,Scene.HEIGHT));
+	protected final GameScene gs;
+	
+	public Layer(GameScene scene,int width, int height, Batch batch){
+		super(new StretchViewport(width, height), batch);
+		gs = scene;	
 	}	
 	
-	@Override
-	public void dispose() {
-		stage.dispose();
-	}
 	
-	public Stage getStage(){
-		return stage;
-	}
-
 	public AssetManager getAssets(){
 		return gs.getLevelAsset();
 	}
-	
-	public abstract void act(float dt);
-	
-	public abstract void draw();
 }
