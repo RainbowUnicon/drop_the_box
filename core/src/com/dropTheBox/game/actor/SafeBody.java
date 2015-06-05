@@ -3,14 +3,8 @@ package com.dropTheBox.game.actor;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.JointEdge;
 import com.badlogic.gdx.physics.box2d.MassData;
-import com.badlogic.gdx.physics.box2d.Shape;
-import com.badlogic.gdx.physics.box2d.Transform;
-import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.physics.box2d.World; 
 
 public final class SafeBody{
 	private Body body;
@@ -18,67 +12,14 @@ public final class SafeBody{
 	public SafeBody(Body b) {
 		body = b;	
 	}
-
-	
-	public void setTransform(Vector2 position, float angle) {
-		body.setTransform(position, angle);
-	}
-
-	
-	public void setTransform(float x, float y, float angle) {
-		body.setTransform(x, y, angle);
-	}
-
-	
-	public Transform getTransform() {
-		return body.getTransform();
-	}
-
-	
-	public Vector2 getPosition() {
-		return body.getPosition();
-	}
-
-	
-	public float getAngle() {
-		return body.getAngle();
-	}
-
 	
 	public Vector2 getWorldCenter() {
 		return body.getWorldCenter();
 	}
 
-	
 	public Vector2 getLocalCenter() {
 		return body.getLocalCenter();
 	}
-
-	
-	public void setLinearVelocity(Vector2 v) {
-		body.setLinearVelocity(v);
-	}
-
-	
-	public void setLinearVelocity(float vX, float vY) {
-		body.setLinearVelocity(vX, vY);
-	}
-
-	
-	public Vector2 getLinearVelocity() {
-		return body.getLinearVelocity();
-	}
-
-	
-	public void setAngularVelocity(float omega) {
-		body.setAngularVelocity(omega);
-	}
-
-	
-	public float getAngularVelocity() {
-		return body.getAngularVelocity();
-	}
-
 	
 	public void applyForce(Vector2 force, Vector2 point, boolean wake) {
 		body.applyForce(force, point, wake);

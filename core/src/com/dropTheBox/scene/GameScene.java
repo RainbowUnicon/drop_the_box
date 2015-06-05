@@ -38,10 +38,10 @@ public class GameScene implements Scene {
 		gLayer = new GlassLayer(this, batch);
 		
 		InputMultiplexer multiplexer = new InputMultiplexer();
-		multiplexer.addProcessor(aLayer);
-		multiplexer.addProcessor(dLayer);
-		multiplexer.addProcessor(bLayer);
-		multiplexer.addProcessor(gLayer);
+		multiplexer.addProcessor(aLayer.getProcessor());
+		multiplexer.addProcessor(dLayer.getProcessor());
+		multiplexer.addProcessor(bLayer.getProcessor());
+		multiplexer.addProcessor(gLayer.getProcessor());
 		Gdx.input.setInputProcessor(multiplexer);
 		Gdx.input.setCatchBackKey(true); 
 	}
@@ -49,17 +49,17 @@ public class GameScene implements Scene {
 	@Override
 	public void update() {
 		float dt = Gdx.graphics.getDeltaTime();
-		aLayer.act(dt);
-		bLayer.act(dt);
-		dLayer.act(dt);
-		gLayer.act(dt);
+		aLayer.update(dt);
+		bLayer.update(dt);
+		dLayer.update(dt);
+		gLayer.update(dt);
 	}
 
 	@Override
 	public void draw() {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		aLayer.draw();
 		bLayer.draw();
+		aLayer.draw();
 		dLayer.draw();
 		gLayer.draw();
 	}
@@ -71,12 +71,12 @@ public class GameScene implements Scene {
 
 	@Override
 	public void resume() {
-		state = GameState.Pause;
+		state = GameState.Running;
 	}
 
 	@Override
 	public void pause() {
-		state = GameState.Running;
+		state = GameState.Pause;
 	}
 
 	@Override

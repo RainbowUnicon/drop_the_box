@@ -1,8 +1,7 @@
 package com.dropTheBox.game.actor.platform;
 
-import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
@@ -12,59 +11,28 @@ import com.dropTheBox.game.actor.Base;
 import com.dropTheBox.game.layer.ActorLayer;
 
 public class Platform extends Base {
-	private Texture texture;
 	public void init(ActorLayer layer, float x, float y, float w, float h){
 		super.init(layer, x, y, w, h);
-		getFixture().getFilterData().groupIndex = 3;
-		texture = layer.getAssets().get("platform.png", Texture.class);
+		getFixture().getFilterData().groupIndex = -3;
+		
+		Pixmap pixmap = new Pixmap( 64, 64, Pixmap.Format.RGBA8888 );
+		pixmap.setColor( .5f, .5f, .5f, 1f );
+		pixmap.fillRectangle(0, 0, (int) w, (int) h);
+		pixmap.setColor(1,1,1,1);
+		pixmap.fillRectangle(2, 2,(int) w-2,(int) h-2);
+		this.setImage(new Texture( pixmap ));
+		pixmap.dispose();
 	}
 
 
-	@Override
-	public void draw(Batch batch, float parentAlpha) {
-		Color color = getColor();
-        batch.setColor(color.r, color.g, color.b, color.a * parentAlpha);
-		batch.draw(texture, getX(), getY(), getOriginX(), getOriginY(), getWidth(), getHeight(), getScaleX(), getScaleY(),
-				getRotation(), 0, 0, (int)getWidth(), (int)getHeight(), false, false);
-
-	}
-
-	@Override
-	public void act(float dt) {
-		super.act(dt);
-	}
+	
 	
 	@Override
 	protected Shape createShape() {
 		PolygonShape shape = new PolygonShape();
-	    shape.setAsBox(getWidth()/ 2f,getHeight() /2f);
+	    shape.setAsBox(getWidth() / WORLDSCALE / 2f,getHeight() / WORLDSCALE /2f);
 	    return shape;
 	}
-
-	@Override
-	public void setSize(float w, float h) {
-		PolygonShape shape = (PolygonShape) getFixture().getShape();
-		shape.setAsBox(w/ 2f, h /2f);
-	}
-
-
-	@Override
-	public void setHeight(float height) {
-		setSize(getWidth(), height);
-	}
-
-
-	@Override
-	public void setWidth(float w) {
-		setSize(w, getHeight());
-	}
-
-
-	@Override
-	public void sizeBy(float x, float y) {
-		setSize(getWidth() + x, getHeight() + y);
-	}
-
 
 	@Override
 	protected FixtureDef createFixtureDef(Shape shape) {
@@ -74,7 +42,6 @@ public class Platform extends Base {
 		fixtureDef.friction = 0f;
 		return fixtureDef;
 	}
-
 
 	@Override
 	protected BodyDef createBodyDef() {

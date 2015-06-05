@@ -15,23 +15,23 @@ public final class LoadAssets {
 	
 	public static void loadAsset(AssetManager assMan){
 		assMan.load("logo.png", Texture.class);
-		assMan.load("playButton.png",Texture.class);
-		assMan.load("playButton_down.png",Texture.class);
-		assMan.load("levelButton.png",Texture.class);
-		assMan.load("levelButton_down.png",Texture.class);
-		assMan.load("settingButton.png",Texture.class);
-		assMan.load("settingButton_down.png",Texture.class);
+		assMan.load("common/playButton.png",Texture.class);
+		assMan.load("common/playButton_down.png",Texture.class);
+		assMan.load("common/levelButton.png",Texture.class);
+		assMan.load("common/levelButton_down.png",Texture.class);
+		assMan.load("common/settingButton.png",Texture.class);
+		assMan.load("common/settingButton_down.png",Texture.class);
 		
-		assMan.load("checked.png",Texture.class);
-		assMan.load("checked_disabled.png",Texture.class);
-		assMan.load("unchecked.png",Texture.class);
-		assMan.load("unchecked_disabled.png",Texture.class);
+		assMan.load("common/checked.png",Texture.class);
+		assMan.load("common/checked_disabled.png",Texture.class);
+		assMan.load("common/unchecked.png",Texture.class);
+		assMan.load("common/unchecked_disabled.png",Texture.class);
 		
-		assMan.load("knob.png",Texture.class);
-		assMan.load("slider.png",Texture.class);
+		assMan.load("common/knob.png",Texture.class);
+		assMan.load("common/slider.png",Texture.class);
 		
-		assMan.load("button.png",Texture.class);
-		assMan.load("button_down.png",Texture.class);
+		assMan.load("common/button.png",Texture.class);
+		assMan.load("common/button_down.png",Texture.class);
 		
 		FileHandleResolver resolver = new InternalFileHandleResolver();
 		assMan.setLoader(FreeTypeFontGenerator.class, new FreeTypeFontGeneratorLoader(resolver));
