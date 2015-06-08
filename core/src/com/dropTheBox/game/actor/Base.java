@@ -3,7 +3,7 @@ package com.dropTheBox.game.actor;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Contact;
@@ -22,21 +22,31 @@ public abstract class Base extends com.badlogic.gdx.scenes.scene2d.Actor impleme
 	public static final float WORLDSCALE = 20f; 
 	
 	private boolean initialized = false;
-	private ActorLayer layer;
+	private final ActorLayer layer;
+
 	
-	private Texture texture;
+	private TextureRegion region;
+	
 	private SafeBody sBody;
 	
 	protected Body body;
 	protected Fixture fixture;
-
-	protected void init(ActorLayer l, float x, float y, float w, float h){
+	
+	private Base(){
+		layer = null;
+	}
+	public Base(ActorLayer _layer){
+		layer = _layer;
+	}
+	
+	protected void init(float x, float y, float w, float h){
+		layer.getStage().addActor(this);
 		super.setWidth(w);
 		super.setHeight(h);
-		layer = l;
-		texture = l.getAssets().get("game/base.png",Texture.class);
+		region = new TextureRegion(layer.getAssets().get("game/base.png",Texture.class));
 		
 		if(initialized){
+			body.setActive(true);
 			setSize(w / WORLDSCALE, h / WORLDSCALE);
 		} else{
 			World world = layer.world;
@@ -54,17 +64,14 @@ public abstract class Base extends com.badlogic.gdx.scenes.scene2d.Actor impleme
 			shapeToBeDisposed.dispose();
 			
 			sBody = new SafeBody(body);
-			
-			initialized = true;
 		}
 		setPosition(x,y);
-		body.applyForceToCenter(MathUtils.randomSign() * 50, 0, true);
 	}
 	
 	@Override
 	public void act(float dt){
-		super.setX(body.getPosition().x - getWidth()/2);
-		super.setY(body.getPosition().y - getHeight()/2);
+		super.setX(body.getPosition().x * WORLDSCALE - getWidth()/2);
+		super.setY(body.getPosition().y * WORLDSCALE - getHeight()/2);
 		super.setRotation((float)Math.toDegrees(body.getAngle())); 
 	}
 	
@@ -72,27 +79,27 @@ public abstract class Base extends com.badlogic.gdx.scenes.scene2d.Actor impleme
 	public void draw(Batch batch, float parentAlpha) {
 		Color color = getColor();
         batch.setColor(color.r, color.g, color.b, color.a * parentAlpha);
-		batch.draw(texture, getX(), getY(),  getWidth() / 2f,getHeight() / 2f, getWidth(), getHeight(), getScaleX(), getScaleY(),
-				getRotation(), 0, 0, (int)getWidth(), (int)getHeight(), false, false);
+		drawImageAt(batch, getX(), getY());
 	}
 	
+	protected void drawImageAt(Batch batch, float xPos, float yPos){
+		batch.draw(region, xPos, yPos,  getWidth() / 2f, getHeight() / 2f, getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
+	}
 
 	@Override
 	public void moveBy(float x, float y){
 		setPosition(getX() + x, getY() + y);
 	}
-	
+
 	@Override
 	public boolean remove(){
-		throw new UnsupportedOperationException();
-	}
-	
-	public void remove(World world){
-		super.remove();
-		world.destroyBody(body);
+		boolean success = super.remove();
+		getLayer().world.destroyBody(body);
 		body = null;
 		this.dispose();
+		return success;
 	}
+	
 	
 	@Override
 	public void rotateBy(float d){
@@ -101,16 +108,25 @@ public abstract class Base extends com.badlogic.gdx.scenes.scene2d.Actor impleme
 	
 	@Override
 	public void scaleBy(float scale){
-		super.scaleBy(scale);
-		//TODO
+		setScale(getScaleX() + scale, getScaleY() + scale);
 	}
 	
 	@Override
 	public void scaleBy(float scaleX, float scaleY){
-		super.scaleBy(scaleX, scaleY);
-		//TODO
+		setScale(getScaleX() + scaleX, getScaleY() + scaleY);
 	}
 	
+	@Override
+	public void setScale(float scaleXY) {
+		setScale(scaleXY, scaleXY);
+	}
+
+	@Override
+	public void setScale(float scaleX, float scaleY) {
+		super.setScale(scaleX, scaleY);
+		ShapeTransformer.scale(fixture.getShape(), scaleX, scaleY);
+	}
+
 	@Override
 	public void setBounds(float x, float y, float w, float h){
 		setPosition(x,y);
@@ -180,26 +196,36 @@ public abstract class Base extends com.badlogic.gdx.scenes.scene2d.Actor impleme
 		return body.getAngularVelocity();
 	}
 	
-	public void setImage(Texture t){
-		texture = t;
+	
+	
+	
+	public void setImage(TextureRegion _region){
+		region = _region;
 	}
 	
-	public Texture getImage(){
-		return texture;
+	public TextureRegion getImage(){
+		return region;
 	}
 	
 	public ActorLayer getLayer(){
 		return layer;
 	}
+	
+	protected boolean isInitialized(){
+		return initialized;
+	}
 
+	
 	@Override
 	public void reset() {
-		body.setAwake(false);
+		body.setActive(false);
 		body.setLinearVelocity(0,0);
 		body.setAngularVelocity(0);
 		setSize(0,0);
 		setPosition(0,0);
 		setRotation(0);
+		initialized = true;
+		this.remove();
 	}
 	
 	protected abstract FixtureDef createFixtureDef(Shape shape);

@@ -11,36 +11,36 @@ import com.dropTheBox.utils.ShapeTransformer;
 
 
 public abstract class Entity extends Base {
-	private Fixture lFixture, rFixture;
-	private boolean lBuffer, rBuffer;
-
-	protected void init(ActorLayer l, float x, float y, float w, float h){ 
-		super.init(l, x, y, w, h);
-
-		Shape rightBufferShape = createShape();
-		Shape leftBufferShape = createShape();
-		
-		rFixture = body.createFixture(createFixtureDef(rightBufferShape));
-		lFixture = body.createFixture(createFixtureDef(leftBufferShape));
-		rFixture.setUserData(this);
-		lFixture.setUserData(this);
-		
-		rightBufferShape.dispose();
-		leftBufferShape.dispose();
-
+	public Entity(ActorLayer _layer) {
+		super(_layer);
 	}
-	
+
+	private Fixture ninjaFixture;
+	private NinjaLoc currNinjaLoc;
+
+	protected void init( float x, float y, float w, float h){ 
+		super.init(x, y, w, h);
+
+		if(isInitialized())
+			setSize(w / WORLDSCALE, h / WORLDSCALE);
+		else {
+			Shape ninjaShape = createShape();
+			ninjaFixture = body.createFixture(createFixtureDef(ninjaShape));
+			ninjaFixture.setUserData(this);
+			ninjaShape.dispose();
+		}
+
+		currNinjaLoc = isAtLeftCorner() ? NinjaLoc.RIGHT : NinjaLoc.CENTER;
+		currNinjaLoc = isAtRightCorner() ? NinjaLoc.LEFT : NinjaLoc.CENTER;
+	}
+
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		super.draw(batch, parentAlpha);
-		if(rBuffer){
-			batch.draw(getImage(), getX() + getLayer().getWidth(), getY(), getWidth() / 2f,getHeight() / 2f, getWidth(), getHeight(), getScaleX(), getScaleY(),
-					getRotation(), 0, 0, (int)getWidth(), (int)getHeight(), false, false);
-		}
-		else if(lBuffer){
-			batch.draw(getImage(), getX() - getLayer().getWidth(), getY(),  getWidth() / 2f,getHeight() / 2f, getWidth(), getHeight(), getScaleX(), getScaleY(),
-					getRotation(), 0, 0, (int)getWidth(), (int)getHeight(), false, false);
-		}
+		if(currNinjaLoc == NinjaLoc.RIGHT)
+			drawImageAt(batch,getX() + getLayer().getWidth(), getY());
+		else if(currNinjaLoc == NinjaLoc.LEFT)
+			drawImageAt(batch, getX() - getLayer().getWidth(), getY());
 	}
 
 	@Override
@@ -49,47 +49,46 @@ public abstract class Entity extends Base {
 
 		float xPos = getX();
 		float yPos = getY();
-		float xVel = getXVelocity();
-		float yVel = getYVelocity();
-		
-		if(xPos <= 0 && xVel < 0){
-			if(!rBuffer)
-				this.setRightBuffer(true);
-			if(xPos <= -getWidth()){
-				this.setRightBuffer(false);
+
+		if(isAtLeftCorner()){
+			if(currNinjaLoc != NinjaLoc.RIGHT)
+				updateNinja(NinjaLoc.RIGHT);
+			if(xPos <= -getWidth())
 				this.setPosition(getLayer().getWidth() - getWidth(), yPos);
-			}
 		}
-		else if(xPos + getWidth() >= getLayer().getWidth() && xVel > 0){
-			if(!lBuffer)
-				this.setLeftBuffer(true);
-			if(xPos >= getLayer().getWidth() ){
-				this.setLeftBuffer(false);
+		else if(isAtRightCorner()){
+			if(currNinjaLoc != NinjaLoc.LEFT)
+				updateNinja(NinjaLoc.LEFT);
+			if(xPos >= getLayer().getWidth() )
 				this.setPosition(0, yPos);
-			}
 		}
+		else if(currNinjaLoc != NinjaLoc.CENTER){
+			updateNinja(NinjaLoc.LEFT);
+		}
+	} 
+
+	protected void updateNinja(NinjaLoc loc){
+		int gap =  loc.pos - currNinjaLoc.pos;
+		ShapeTransformer.translate(ninjaFixture.getShape(), gap * Scene.WIDTH, 0);
+		currNinjaLoc = loc;
+	}
+
+	protected boolean isAtLeftCorner(){
+		return (getX() <= 0);
+	}
+
+	protected boolean isAtRightCorner(){
+		return (getX() + getWidth() >= getLayer().getWidth());
 	}
 
 
 
-	
-	protected void setLeftBuffer(boolean flag){
-		lBuffer = flag;
-		if(flag){
-			ShapeTransformer.translate(lFixture.getShape(), -Scene.WIDTH, 0);
-		}
-		else{
-			ShapeTransformer.translate(lFixture.getShape(), Scene.WIDTH, 0);
+	private enum NinjaLoc{
+		LEFT(-1), RIGHT(1), CENTER(0);
+		public int pos;
+		NinjaLoc(int p){
+			pos = p;
 		}
 	}
-	
-	protected void setRightBuffer(boolean flag){
-		rBuffer = flag;
-		if(flag){
-			ShapeTransformer.translate(rFixture.getShape(), Scene.WIDTH, 0);
-		}
-		else{
-			ShapeTransformer.translate(rFixture.getShape(), -Scene.WIDTH, 0);
-		}
-	}
+
 }

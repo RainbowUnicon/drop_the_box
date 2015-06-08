@@ -3,9 +3,8 @@ package com.dropTheBox.game.actor.player;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
@@ -17,15 +16,19 @@ import com.dropTheBox.game.layer.ActorLayer;
 import com.dropTheBox.scene.GameScene.GameState;
 
 public class Player extends Entity implements InputProcessor{
-	private Texture tR, tL, tF;
+	public Player(ActorLayer _layer) {
+		super(_layer);
+		// TODO Auto-generated constructor stub
+	}
+	private TextureRegion tR, tL, tF;
 	private boolean leftMove, rightMove;
 
-	public void init(ActorLayer layer, float x, float y){
-		super.init(layer, x, y, 50,50);
-		getFixture().getFilterData().groupIndex = -5;
-		tR = layer.getAssets().get("game/player_r.png", Texture.class);
-		tF = layer.getAssets().get("game/player_f.png", Texture.class);
-		tL = layer.getAssets().get("game/player_l.png", Texture.class);
+	public void init(float x, float y){
+		super.init(x, y, 50,50);
+		getFixture().getFilterData().groupIndex = 5;
+		tR = new TextureRegion(getLayer().getAssets().get("game/player_r.png", Texture.class));
+		tF = new TextureRegion(getLayer().getAssets().get("game/player_f.png", Texture.class));
+		tL = new TextureRegion(getLayer().getAssets().get("game/player_l.png", Texture.class));
 		setImage(tR);
 	}
 
@@ -35,8 +38,6 @@ public class Player extends Entity implements InputProcessor{
 		super.act(dt);
 
 		SafeBody body = getBody();
-		float xPos = getX();
-		float yPos = getY();
 		float xVel = getXVelocity();
 		float yVel = getYVelocity();
 

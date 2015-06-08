@@ -23,13 +23,13 @@ public class GameScene implements Scene {
 	private final DisplayLayer dLayer;
 	private final GlassLayer gLayer;
 	
-	private GameState state;
+	private GameState currState;
 	
 	public GameScene(DropTheBox _dtb, LevelData data){
 		dtb = _dtb;
 		levelData = data;
 		levelAsset = new AssetManager();
-		state = GameState.Running; //TODO change it to CountDown
+		currState = GameState.Running; //TODO change it to CountDown
 		
 		SpriteBatch batch = new SpriteBatch();
 		aLayer = new ActorLayer(this, batch);
@@ -49,10 +49,10 @@ public class GameScene implements Scene {
 	@Override
 	public void update() {
 		float dt = Gdx.graphics.getDeltaTime();
-		aLayer.update(dt);
-		bLayer.update(dt);
-		dLayer.update(dt);
-		gLayer.update(dt);
+		aLayer.act(dt);
+		bLayer.act(dt);
+		dLayer.act(dt);
+		gLayer.act(dt);
 	}
 
 	@Override
@@ -71,12 +71,12 @@ public class GameScene implements Scene {
 
 	@Override
 	public void resume() {
-		state = GameState.Running;
+		currState = GameState.Running;
 	}
 
 	@Override
 	public void pause() {
-		state = GameState.Pause;
+		currState = GameState.Pause;
 	}
 
 	@Override
@@ -94,10 +94,10 @@ public class GameScene implements Scene {
 	}
 	
 	public GameState getState() {
-		return state;
+		return currState;
 	}
 	public void setState(GameState state) {
-		this.state = state;
+		this.currState = state;
 	}
 	public LevelData getLevelData() {
 		return levelData;

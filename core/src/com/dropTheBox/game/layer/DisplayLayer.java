@@ -17,7 +17,7 @@ public class DisplayLayer extends Layer {
 	}
 
 	@Override
-	public void update(float dt) {
+	public void act(float dt) {
 		// TODO Auto-generated method stub
 		
 	}

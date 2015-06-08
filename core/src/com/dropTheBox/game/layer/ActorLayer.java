@@ -14,10 +14,8 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.dropTheBox.game.actor.Base;
-import com.dropTheBox.game.actor.entity.Crate;
 import com.dropTheBox.game.actor.entity.Entity;
-import com.dropTheBox.game.actor.entity.Mob;
-import com.dropTheBox.game.actor.item.Item;
+import com.dropTheBox.game.actor.item.Coin;
 import com.dropTheBox.game.actor.platform.Platform;
 import com.dropTheBox.game.actor.player.Player;
 import com.dropTheBox.scene.GameScene;
@@ -30,7 +28,7 @@ public class ActorLayer extends Layer {
 	
 	//TODO remove these
 	Platform p;
-	Item i;
+	Coin c;
 	Player player;
 	Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
 	OrthographicCamera camera;
@@ -39,37 +37,46 @@ public class ActorLayer extends Layer {
 	public ActorLayer(GameScene scene, Batch batch){
 		super(scene, Layer.WIDTH, Layer.HEIGHT, batch);
 		world = new World(new Vector2(0, -10), true); 
-
+		world.setContactListener(new MyContactListener());
 		Load.load(getAssets());
 		
 		camera = new OrthographicCamera(getWidth(),getHeight());
         camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 0); 
         camera.update();
         
-		p = new Platform(); //TODO remove these
+		p = new Platform(this); //TODO remove these
 		stage.addActor(p);
-		p.init(this, -150, 0, 660, 30);
+		p.init(-150, 0, 660, 30);
 		
-//		i = new Item();
-//		stage.addActor(i);
-//		i.init(this, 0, 30, 50);
+		Coin c = new Coin(this);
+		stage.addActor(c);
+		c.init(-25, 40, Coin.SILVER);
 		
-		player = new Player();
-		player.init(this,200, 30);
+		Coin ca = new Coin(this);
+		stage.addActor(ca);
+		ca.init(50, 40, Coin.BRONZE);
+		Coin cb = new Coin(this);
+		stage.addActor(cb);
+		cb.init(100, 40, Coin.GOLD);
+		
+		Coin cc = new Coin(this);
+		stage.addActor(cc);
+		cc.init(150, 40, Coin.SILVER);
+
+		
+		player = new Player(this);
+		player.init(250, 40);
 		stage.addActor(player);
 		
 //		Crate crate = new Crate();
 //		crate.init(this, 0, 30);
 //		stage.addActor(crate);
-		
-		Mob mob = new Mob();
-		mob.init(this, 100, 30);
-		stage.addActor(mob);
+
 	}
 
 	@Override
-	public void update(float dt) {
-		if(gs.getState() == GameState.Running){
+	public void act(float dt) {
+		if(getState() == GameState.Running){
 			world.step(dt, 6, 2);
 			stage.act(dt);
 			
@@ -78,7 +85,7 @@ public class ActorLayer extends Layer {
 
 	@Override
 	public void draw() {
-		GameState state = gs.getState();		
+		GameState state = getState();		
 		if(state == GameState.Running || state == GameState.CountDown || state == GameState.Pause)
 			stage.draw();
 		debugRenderer.render(world, camera.combined);
@@ -108,10 +115,10 @@ class Load{
 		am.load("game/player_l.png", Texture.class);
 		am.load("game/player_r.png", Texture.class);
 		am.load("game/mob_0.png", Texture.class);
-		am.load("game/mob_1.png", Texture.class);
-		am.load("game/mob_2.png", Texture.class);
-		am.load("game/mob_3.png", Texture.class);
-		am.load("game/mob_4.png", Texture.class);
+		am.load("game/minion_1.png", Texture.class);
+		am.load("game/bronzeCoin.png", Texture.class);
+		am.load("game/silverCoin.png", Texture.class);
+		am.load("game/goldCoin.png", Texture.class);
 		while(!am.update());
 	}
 }

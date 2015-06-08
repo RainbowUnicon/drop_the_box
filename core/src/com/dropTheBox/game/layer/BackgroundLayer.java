@@ -1,11 +1,8 @@
 package com.dropTheBox.game.layer;
 
-import javafx.scene.layout.Background;
-
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.dropTheBox.scene.GameScene;
 
 public class BackgroundLayer extends Layer{
@@ -26,7 +23,7 @@ public class BackgroundLayer extends Layer{
 	}
 
 	@Override
-	public void update(float dt) {
+	public void act(float dt) {
 	}
 
 	@Override

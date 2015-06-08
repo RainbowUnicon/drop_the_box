@@ -1,21 +1,26 @@
 package com.dropTheBox.game.actor.item;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.Shape;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.dropTheBox.game.actor.Base;
+import com.dropTheBox.game.actor.entity.Entity;
 import com.dropTheBox.game.layer.ActorLayer;
 
-public class Item extends Base {
-	
-	public void init(ActorLayer layer, float x, float y,float d){
-		super.init(layer, x, y, d, d);
-		getFixture().getFilterData().groupIndex = -3;
+public abstract class Item extends Entity {
+	public Item(ActorLayer _layer) {
+		super(_layer);
+		// TODO Auto-generated constructor stub
+	}
 
-		this.setImage(layer.getAssets().get("game/item.png",Texture.class));
+	private boolean isActivated;
+	
+	protected void init(float x, float y,float d){
+		super.init(x, y, d, d);
+		getFixture().getFilterData().groupIndex = 3;
+		isActivated = false;
+		
 	}
 	
 
@@ -41,7 +46,16 @@ public class Item extends Base {
 	protected BodyDef createBodyDef() {
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.type = BodyType.KinematicBody;
+		bodyDef.awake = false;
 		return bodyDef;
+	}
+	
+	public void activate(){
+		isActivated = true;
+	}
+	
+	public boolean isActivated(){
+		return isActivated;
 	}
 
 }
