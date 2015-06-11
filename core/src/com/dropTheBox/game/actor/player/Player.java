@@ -10,22 +10,24 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
-import com.dropTheBox.game.actor.SafeBody;
 import com.dropTheBox.game.actor.entity.Entity;
 import com.dropTheBox.game.layer.ActorLayer;
 import com.dropTheBox.scene.GameScene.GameState;
 
 public class Player extends Entity implements InputProcessor{
+	public static final int WIDTH = 40, HEIGHT = 40;
+	private TextureRegion tR, tL, tF;
+	
+	private boolean leftMove, rightMove;
+	
+	
 	public Player(ActorLayer _layer) {
 		super(_layer);
-		// TODO Auto-generated constructor stub
 	}
-	private TextureRegion tR, tL, tF;
-	private boolean leftMove, rightMove;
-
+	
 	public void init(float x, float y){
-		super.init(x, y, 50,50);
-		getFixture().getFilterData().groupIndex = 5;
+		super.init(x, y, WIDTH, HEIGHT);
+
 		tR = new TextureRegion(getLayer().getAssets().get("game/player_r.png", Texture.class));
 		tF = new TextureRegion(getLayer().getAssets().get("game/player_f.png", Texture.class));
 		tL = new TextureRegion(getLayer().getAssets().get("game/player_l.png", Texture.class));
@@ -37,21 +39,20 @@ public class Player extends Entity implements InputProcessor{
 	public void act(float dt) {
 		super.act(dt);
 
-		SafeBody body = getBody();
 		float xVel = getXVelocity();
 		float yVel = getYVelocity();
-
-
+		
+		
 		if(leftMove){
 			if(xVel <0)
-				body.applyForceToCenter(-200, 0, true);
+				this.applyForceToCenter(-2000, 0, true);
 			else
-				body.applyForceToCenter(-2000, 0, true);
+				this.applyForceToCenter(-20000, 0, true);
 		}else if( rightMove && !leftMove){
 			if(xVel >0)
-				body.applyForceToCenter(200, 0, true);
+				this.applyForceToCenter(2000, 0, true);
 			else
-				body.applyForceToCenter(2000, 0, true);
+				this.applyForceToCenter(20000, 0, true);
 		}
 
 
@@ -78,9 +79,17 @@ public class Player extends Entity implements InputProcessor{
 	protected FixtureDef createFixtureDef(Shape shape) {
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.shape = shape;
-		fixtureDef.density = 1f; 
+		fixtureDef.density = 10f; 
 		fixtureDef.friction = 0f;
+		fixtureDef.filter.groupIndex = 5;
 		return fixtureDef;
+	}
+
+	@Override
+	protected BodyDef createBodyDef() {
+		BodyDef bodyDef = new BodyDef();
+		bodyDef.type = BodyType.DynamicBody;
+		return bodyDef;
 	}
 
 	public void setLeftMove(boolean m){
@@ -90,15 +99,7 @@ public class Player extends Entity implements InputProcessor{
 	public void setRightMove(boolean m){
 		rightMove = m;
 	}
-
-
-	@Override
-	protected BodyDef createBodyDef() {
-		BodyDef bodyDef = new BodyDef();
-		bodyDef.type = BodyType.DynamicBody;
-		return bodyDef;
-	}
-
+	
 	@Override
 	public boolean keyDown(int keycode) {
 		if(getLayer().getState() == GameState.Running){if(keycode == Keys.A)

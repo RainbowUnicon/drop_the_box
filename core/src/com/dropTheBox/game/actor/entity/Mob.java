@@ -26,7 +26,6 @@ public class Mob extends Entity {
 	
 	public void init(float x, float y){
 		super.init(x, y, 50,50);
-		getFixture().getFilterData().groupIndex = -4;
 		Texture tt = getLayer().getAssets().get("game/minion_1.png",Texture.class); 
 		t0 = new TextureRegion(tt, 0 , 0, 50, 50);
 		t1 = new TextureRegion(tt, 50 , 0, 50, 50);

@@ -17,7 +17,7 @@ public class DropTheBox extends ApplicationAdapter {
 	public void create () {
 		assMan = new AssetManager();
 		setting     = new GenSettings();
-		playerData  = new PlayerData();
+		playerData  = new PlayerData("AA");
 		scene = new LogoScene(this);
 	}
 

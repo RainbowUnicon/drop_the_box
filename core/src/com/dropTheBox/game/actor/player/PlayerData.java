@@ -1,5 +1,18 @@
 package com.dropTheBox.game.actor.player;
 
-public class PlayerData {
+import com.dropTheBox.utils.DataManager;
+
+public class PlayerData extends DataManager{
+
+	public PlayerData(String dataName) {
+		super(dataName);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public void setDefault() {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

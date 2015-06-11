@@ -15,7 +15,6 @@ public class Crate extends Entity {
 
 	public void init(float x, float y){
 		super.init(x, y, 50,50);
-		getFixture().getFilterData().groupIndex = -5;
 	}
 
 	@Override

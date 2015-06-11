@@ -2,7 +2,6 @@ package com.dropTheBox.game.actor.item;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.scenes.scene2d.actions.RemoveActorAction;
@@ -11,12 +10,9 @@ import com.dropTheBox.game.actor.player.Player;
 import com.dropTheBox.game.layer.ActorLayer;
 
 public class Coin extends Item {
-	public Coin(ActorLayer _layer) {
-		super(_layer);
-		// TODO Auto-generated constructor stub
-	}
 
-	public static final int DIAMETER = 50;
+
+	public static final int DIAMETER = 40;
 
 	public static final int GOLD = 300;
 	public static final int SILVER = 200;
@@ -27,16 +23,18 @@ public class Coin extends Item {
 	private float stateTime;
 	private int coinType;
 
-
+	public Coin(ActorLayer _layer) {
+		super(_layer);
+	}
 
 	public void init(float x, float y, int c){
-		super.init(x, y, 50,50);
+		super.init(x, y, DIAMETER, DIAMETER);
 		coinType = c;
 
 		Texture texture = getTexture(getLayer(),c);
 		Array<TextureRegion> regions = new Array<TextureRegion>(numFrame);
 		for(int i = 0; i < numFrame; i ++)
-			regions.add(new TextureRegion(texture, i * 50, 0, DIAMETER, DIAMETER));
+			regions.add(new TextureRegion(texture, i * 50, 0, 50,50)); //TODO Fix this
 
 		animation = new Animation(.10f, regions, Animation.PlayMode.LOOP);
 	}
@@ -46,11 +44,6 @@ public class Coin extends Item {
 		super.act(dt);
 		stateTime += dt;
 		setImage( animation.getKeyFrame(stateTime));
-	}
-
-	@Override
-	public void draw(Batch batch, float a){
-		super.draw(batch, a);
 	}
 
 	private Texture getTexture(ActorLayer layer, int c){
@@ -73,6 +66,6 @@ public class Coin extends Item {
 			getStage().addAction(action);
 			this.activate();
 		}
-	};
+	}
 
 }

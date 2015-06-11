@@ -5,7 +5,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.Contact;
@@ -13,73 +13,69 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
+import com.dropTheBox.game.Camera;
 import com.dropTheBox.game.actor.Base;
-import com.dropTheBox.game.actor.entity.Entity;
-import com.dropTheBox.game.actor.item.Coin;
-import com.dropTheBox.game.actor.platform.Platform;
+import com.dropTheBox.game.actor.platform.NormalPlatform;
 import com.dropTheBox.game.actor.player.Player;
 import com.dropTheBox.scene.GameScene;
 import com.dropTheBox.scene.GameScene.GameState;
 
 public class ActorLayer extends Layer {
-
 	public final World world;
+	
+	private Camera camera;
+	
+
+	//private final FloorManager floorManager;
 	
 	
 	//TODO remove these
-	Platform p;
-	Coin c;
 	Player player;
 	Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
-	OrthographicCamera camera;
-	public Entity ea;
+	OrthographicCamera pcamera;
 	
-	public ActorLayer(GameScene scene, Batch batch){
-		super(scene, Layer.WIDTH, Layer.HEIGHT, batch);
-		world = new World(new Vector2(0, -10), true); 
-		world.setContactListener(new MyContactListener());
+	
+	public ActorLayer(GameScene scene){
+		super(scene, new SpriteBatch());
 		Load.load(getAssets());
 		
-		camera = new OrthographicCamera(getWidth(),getHeight());
-        camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 0); 
-        camera.update();
-        
-		p = new Platform(this); //TODO remove these
-		stage.addActor(p);
-		p.init(-150, 0, 660, 30);
-		
-		Coin c = new Coin(this);
-		stage.addActor(c);
-		c.init(-25, 40, Coin.SILVER);
-		
-		Coin ca = new Coin(this);
-		stage.addActor(ca);
-		ca.init(50, 40, Coin.BRONZE);
-		Coin cb = new Coin(this);
-		stage.addActor(cb);
-		cb.init(100, 40, Coin.GOLD);
-		
-		Coin cc = new Coin(this);
-		stage.addActor(cc);
-		cc.init(150, 40, Coin.SILVER);
+		camera = new Camera(getWidth(), getHeight());
 
+		stage.getViewport().setCamera(camera);
+		world = new World(new Vector2(0, -40), true); //TODO Set gravity constant
+		world.setContactListener(new MyContactListener());
+
+		//floorManager = new FloorManager(this);
+		
+		
+		pcamera = new OrthographicCamera(getWidth(),getHeight());
+        pcamera.position.set(pcamera.viewportWidth / 2f, pcamera.viewportHeight / 2f, 0); 
+        pcamera.update();
+        
 		
 		player = new Player(this);
-		player.init(250, 40);
-		stage.addActor(player);
+		player.init(320, 400);
+		player.setRotation(90);
 		
-//		Crate crate = new Crate();
-//		crate.init(this, 0, 30);
-//		stage.addActor(crate);
 
+		
+		NormalPlatform p = new NormalPlatform(this);
+		p.init(-100,0,100f);
+		
+
+		NormalPlatform p1 = new NormalPlatform(this);
+		p1.init(100f,0,260f);
 	}
 
 	@Override
 	public void act(float dt) {
 		if(getState() == GameState.Running){
-			world.step(dt, 6, 2);
-			stage.act(dt);
+			camera.update(dt);
 			
+			world.step(dt, 6, 2);
+			
+			//floorManager.update(dt);
+			stage.act(dt);
 		}
 	}
 
@@ -88,7 +84,8 @@ public class ActorLayer extends Layer {
 		GameState state = getState();		
 		if(state == GameState.Running || state == GameState.CountDown || state == GameState.Pause)
 			stage.draw();
-		debugRenderer.render(world, camera.combined);
+		debugRenderer.render(world, pcamera.combined);
+		stage.getBatch().flush();
 	}
 
 
@@ -100,7 +97,22 @@ public class ActorLayer extends Layer {
 		m.addProcessor(player);
 		return m;
 	}
+	
+	@Override
+	public void dispose(){
+		super.dispose();
+		//floorManager.dispose();
+	}
+	
+	public Camera getCamera(){
+		return camera;
+	}
 }
+
+
+
+
+
 
 
 

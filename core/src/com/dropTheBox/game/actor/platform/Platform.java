@@ -11,17 +11,14 @@ import com.badlogic.gdx.physics.box2d.Shape;
 import com.dropTheBox.game.actor.Base;
 import com.dropTheBox.game.layer.ActorLayer;
 
-public class Platform extends Base {
+public abstract class Platform extends Base {
+	
 	public Platform(ActorLayer _layer) {
 		super(_layer);
 	}
-
-
-
-
-	public void init(float x, float y, float w, float h){
+	
+	protected void init(float x, float y, float w, float h){
 		super.init(x, y, w, h);
-		getFixture().getFilterData().groupIndex = -3;
 		
 		Pixmap pixmap = new Pixmap( (int)w, (int)h, Pixmap.Format.RGBA8888 );
 		pixmap.setColor( .5f, .5f, .5f, 1f );
@@ -48,6 +45,7 @@ public class Platform extends Base {
 		fixtureDef.shape = shape;
 		fixtureDef.density = 1f; 
 		fixtureDef.friction = 0f;
+		fixtureDef.filter.groupIndex = 3;
 		return fixtureDef;
 	}
 

@@ -18,10 +18,10 @@ public class GameScene implements Scene {
 	private final LevelData levelData;
 	private final AssetManager levelAsset;
 	
-	private final ActorLayer aLayer;
-	private final BackgroundLayer bLayer;
-	private final DisplayLayer dLayer;
-	private final GlassLayer gLayer;
+	private final ActorLayer actorLayer;
+	private final BackgroundLayer backgroundLayer;
+	private final DisplayLayer displayLayer;
+	private final GlassLayer glassLayer;
 	
 	private GameState currState;
 	
@@ -32,16 +32,16 @@ public class GameScene implements Scene {
 		currState = GameState.Running; //TODO change it to CountDown
 		
 		SpriteBatch batch = new SpriteBatch();
-		aLayer = new ActorLayer(this, batch);
-		bLayer = new BackgroundLayer(this, batch);
-		dLayer = new DisplayLayer(this, batch);
-		gLayer = new GlassLayer(this, batch);
+		actorLayer = new ActorLayer(this);
+		backgroundLayer = new BackgroundLayer(this, batch);
+		displayLayer = new DisplayLayer(this, batch);
+		glassLayer = new GlassLayer(this, batch);
 		
 		InputMultiplexer multiplexer = new InputMultiplexer();
-		multiplexer.addProcessor(aLayer.getProcessor());
-		multiplexer.addProcessor(dLayer.getProcessor());
-		multiplexer.addProcessor(bLayer.getProcessor());
-		multiplexer.addProcessor(gLayer.getProcessor());
+		multiplexer.addProcessor(actorLayer.getProcessor());
+		multiplexer.addProcessor(displayLayer.getProcessor());
+		multiplexer.addProcessor(backgroundLayer.getProcessor());
+		multiplexer.addProcessor(glassLayer.getProcessor());
 		Gdx.input.setInputProcessor(multiplexer);
 		Gdx.input.setCatchBackKey(true); 
 	}
@@ -49,19 +49,19 @@ public class GameScene implements Scene {
 	@Override
 	public void update() {
 		float dt = Gdx.graphics.getDeltaTime();
-		aLayer.act(dt);
-		bLayer.act(dt);
-		dLayer.act(dt);
-		gLayer.act(dt);
+		actorLayer.act(dt);
+		backgroundLayer.act(dt);
+		displayLayer.act(dt);
+		glassLayer.act(dt);
 	}
 
 	@Override
 	public void draw() {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		bLayer.draw();
-		aLayer.draw();
-		dLayer.draw();
-		gLayer.draw();
+		backgroundLayer.draw();
+		actorLayer.draw();
+		displayLayer.draw();
+		glassLayer.draw();
 	}
 
 	@Override
@@ -82,10 +82,10 @@ public class GameScene implements Scene {
 	@Override
 	public void dispose() {
 		Gdx.input.setCatchBackKey(false); 
-		aLayer.dispose();
-		bLayer.dispose();
-		dLayer.dispose();
-		gLayer.dispose();
+		actorLayer.dispose();
+		backgroundLayer.dispose();
+		displayLayer.dispose();
+		glassLayer.dispose();
 		levelAsset.dispose();
 	}
 	
@@ -96,26 +96,33 @@ public class GameScene implements Scene {
 	public GameState getState() {
 		return currState;
 	}
+	
 	public void setState(GameState state) {
 		this.currState = state;
 	}
+	
 	public LevelData getLevelData() {
 		return levelData;
 	}
+	
 	public AssetManager getLevelAsset() {
 		return levelAsset;
 	}
-	public ActorLayer getaLayer() {
-		return aLayer;
+	
+	public ActorLayer getActorLayer() {
+		return actorLayer;
 	}
-	public BackgroundLayer getbLayer() {
-		return bLayer;
+	
+	public BackgroundLayer getBackgroundLayer(){
+		return backgroundLayer;
 	}
-	public DisplayLayer getdLayer() {
-		return dLayer;
+	
+	public DisplayLayer getDisplayLayer(){
+		return displayLayer;
 	}
-	public GlassLayer getgLayer() {
-		return gLayer;
+	
+	public GlassLayer getGlassLayer(){
+		return glassLayer;
 	}
 	
 	public enum GameState{

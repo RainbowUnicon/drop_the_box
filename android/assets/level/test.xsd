@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/test" xmlns:tns="http://www.example.org/test" elementFormDefault="qualified">
+
+
+
+
+    <element name="NewElement" type="tns:Floor"></element>
+    
+    <complexType name="Floor">
+    	<attribute name="Hello" type="string"></attribute>
+    </complexType>
+    
+    <element name="NewElement1" type="string"></element>
+
+
+    <complexType name="Floor"></complexType>
+</schema>

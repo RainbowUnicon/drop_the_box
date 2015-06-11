@@ -9,17 +9,16 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.dropTheBox.scene.GameScene;
 import com.dropTheBox.scene.Scene;
 
-public abstract class Layer implements Disposable{
-	private int width, height;
-	
+abstract class Layer implements Disposable{
+	private final int width, height;
 	private final GameScene gs;
-	
-	protected final Stage stage;
-	
-	
-	public Layer(GameScene _scene,int _width, int _height, Batch _batch){
+	public final Stage stage;
+
+	public Layer(GameScene _scene, Batch _batch){
 		gs = _scene;	
-		stage = new Stage(new StretchViewport(_width, _height), _batch);
+		width = Scene.WIDTH;
+		height = Scene.HEIGHT;
+		stage = new Stage(new StretchViewport(width, height), _batch);
 	}	
 
 	public abstract void draw();
@@ -35,6 +34,22 @@ public abstract class Layer implements Disposable{
 	public GameScene.GameState getState(){
 		return gs.getState();
 	}
+	
+	public final ActorLayer getActorLayer() {
+		return gs.getActorLayer();
+	}
+	
+	public final BackgroundLayer getBackgroundLayer(){
+		return gs.getBackgroundLayer();
+	}
+	
+	public final DisplayLayer getDisplayLayer(){
+		return gs.getDisplayLayer();
+	}
+	
+	public final GlassLayer getGlassLayer(){
+		return gs.getGlassLayer();
+	}
 
 	public float getWidth(){
 		return width;
@@ -42,10 +57,6 @@ public abstract class Layer implements Disposable{
 
 	public float getHeight(){
 		return height;
-	}
-	
-	public Stage getStage(){
-		return stage;
 	}
 
 	@Override

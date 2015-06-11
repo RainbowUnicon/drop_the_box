@@ -10,7 +10,7 @@ public class BackgroundLayer extends Layer{
 	private Texture image;
 	
 	public BackgroundLayer(GameScene scene, Batch batch){
-		super(scene,Layer.WIDTH, Layer.HEIGHT, batch);
+		super(scene, batch);
 		this.batch = batch;
 		image = scene.getLevelAsset().get("background/test.png",Texture.class);
 	}

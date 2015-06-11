@@ -8,15 +8,13 @@ import com.dropTheBox.game.layer.ActorLayer;
 import com.dropTheBox.scene.Scene;
 import com.dropTheBox.utils.ShapeTransformer;
 
-
-
 public abstract class Entity extends Base {
+	private Fixture ninjaFixture;
+	private NinjaLoc currNinjaLoc;
+	
 	public Entity(ActorLayer _layer) {
 		super(_layer);
 	}
-
-	private Fixture ninjaFixture;
-	private NinjaLoc currNinjaLoc;
 
 	protected void init( float x, float y, float w, float h){ 
 		super.init(x, y, w, h);
@@ -67,7 +65,7 @@ public abstract class Entity extends Base {
 		}
 	} 
 
-	protected void updateNinja(NinjaLoc loc){
+	private void updateNinja(NinjaLoc loc){
 		int gap =  loc.pos - currNinjaLoc.pos;
 		ShapeTransformer.translate(ninjaFixture.getShape(), gap * Scene.WIDTH, 0);
 		currNinjaLoc = loc;

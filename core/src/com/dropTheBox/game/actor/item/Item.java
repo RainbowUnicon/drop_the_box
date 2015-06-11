@@ -9,18 +9,15 @@ import com.dropTheBox.game.actor.entity.Entity;
 import com.dropTheBox.game.layer.ActorLayer;
 
 public abstract class Item extends Entity {
+	private boolean isActivated;
+	
 	public Item(ActorLayer _layer) {
 		super(_layer);
-		// TODO Auto-generated constructor stub
 	}
-
-	private boolean isActivated;
 	
 	protected void init(float x, float y,float d){
 		super.init(x, y, d, d);
-		getFixture().getFilterData().groupIndex = 3;
 		isActivated = false;
-		
 	}
 	
 
@@ -39,6 +36,7 @@ public abstract class Item extends Entity {
 		fixtureDef.density = 1f; 
 		fixtureDef.friction = 0f;
 		fixtureDef.isSensor = true;
+		fixtureDef.filter.groupIndex = 5;
 		return fixtureDef;
 	}
 
@@ -57,5 +55,4 @@ public abstract class Item extends Entity {
 	public boolean isActivated(){
 		return isActivated;
 	}
-
 }
