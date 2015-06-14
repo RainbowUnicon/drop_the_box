@@ -3,7 +3,9 @@ package com.dropTheBox.game.actor.item;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Contact;
+import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.scenes.scene2d.actions.RemoveActorAction;
 import com.badlogic.gdx.utils.Array;
 import com.dropTheBox.game.actor.player.Player;
@@ -37,6 +39,7 @@ public class Coin extends Item {
 			regions.add(new TextureRegion(texture, i * 50, 0, 50,50)); //TODO Fix this
 
 		animation = new Animation(.10f, regions, Animation.PlayMode.LOOP);
+		setImage( animation.getKeyFrame(stateTime));
 	}
 
 	@Override
@@ -55,12 +58,19 @@ public class Coin extends Item {
 			return layer.getAssets().get("game/bronzeCoin.png", Texture.class);
 		throw new RuntimeException("Not valid coin type");
 	}
+	
+	@Override
+	protected Shape createShape() {
+		CircleShape shape = new CircleShape();
+		shape.setRadius(DIAMETER / WORLDSCALE / 2f);
+		return shape;
+	}
 
 	@Override
 	public void beginContact (Contact contact){
 		if(!isActivated() && contact.getFixtureA().getUserData() instanceof Player ||
 				contact.getFixtureB().getUserData() instanceof Player){
-			
+			getLayer().getDisplayLayer().getScoreBoard().addScore(coinType);
 			RemoveActorAction action = new RemoveActorAction();
 			action.setTarget(this);
 			getStage().addAction(action);

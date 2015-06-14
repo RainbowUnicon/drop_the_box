@@ -1,20 +1,21 @@
 package com.dropTheBox.game.actor.entity;
 
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.dropTheBox.game.layer.ActorLayer;
 
 public class Crate extends Entity {
-
+	public static final float WIDTH = 50, HEIGHT =50;
 	public Crate(ActorLayer _layer) {
 		super(_layer);
 	}
 
 	public void init(float x, float y){
-		super.init(x, y, 50,50);
+		super.init(x, y, WIDTH, HEIGHT);
+		setImage(new TextureRegion(getLayer().getAssets().get("game/crate.png",Texture.class)));
 	}
 
 	@Override
@@ -31,13 +32,6 @@ public class Crate extends Entity {
 		fixtureDef.density = 1f; 
 		fixtureDef.friction = 0f;
 		return fixtureDef;
-	}
-
-	@Override
-	protected BodyDef createBodyDef() {
-		BodyDef bodyDef = new BodyDef();
-		bodyDef.type = BodyType.DynamicBody;
-		return bodyDef;
 	}
 
 

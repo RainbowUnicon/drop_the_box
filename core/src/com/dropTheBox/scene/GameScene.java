@@ -28,7 +28,7 @@ public class GameScene implements Scene {
 	public GameScene(DropTheBox _dtb, LevelData data){
 		dtb = _dtb;
 		levelData = data;
-		levelAsset = new AssetManager();
+		levelAsset = dtb.getAssMan();
 		currState = GameState.Running; //TODO change it to CountDown
 		
 		SpriteBatch batch = new SpriteBatch();
@@ -49,6 +49,7 @@ public class GameScene implements Scene {
 	@Override
 	public void update() {
 		float dt = Gdx.graphics.getDeltaTime();
+		dt = dt < 1 / 30f ? dt : 1 / 30f;
 		actorLayer.act(dt);
 		backgroundLayer.act(dt);
 		displayLayer.act(dt);

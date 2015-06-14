@@ -5,7 +5,6 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
@@ -19,41 +18,51 @@ public class Player extends Entity implements InputProcessor{
 	private TextureRegion tR, tL, tF;
 	
 	private boolean leftMove, rightMove;
+	private float maxSpeed, brakeForce, accelForce;
 	
-	
-	public Player(ActorLayer _layer) {
-		super(_layer);
+	public Player(ActorLayer layer) {
+		super(layer);
 	}
 	
 	public void init(float x, float y){
 		super.init(x, y, WIDTH, HEIGHT);
+		setType(BodyType.DynamicBody);
 
 		tR = new TextureRegion(getLayer().getAssets().get("game/player_r.png", Texture.class));
 		tF = new TextureRegion(getLayer().getAssets().get("game/player_f.png", Texture.class));
 		tL = new TextureRegion(getLayer().getAssets().get("game/player_l.png", Texture.class));
 		setImage(tR);
+		
+		brakeForce = 5000;
+		accelForce = 1000;
+		maxSpeed = 1000;
+		
 	}
 
 
 	@Override
 	public void act(float dt) {
 		super.act(dt);
-
 		float xVel = getXVelocity();
 		float yVel = getYVelocity();
 		
 		
 		if(leftMove){
 			if(xVel <0)
-				this.applyForceToCenter(-2000, 0, true);
+				this.applyForceToCenter(-accelForce, 0, true);
 			else
-				this.applyForceToCenter(-20000, 0, true);
+				this.applyForceToCenter(-brakeForce, 0, true);
 		}else if( rightMove && !leftMove){
 			if(xVel >0)
-				this.applyForceToCenter(2000, 0, true);
+				this.applyForceToCenter(accelForce, 0, true);
 			else
-				this.applyForceToCenter(20000, 0, true);
+				this.applyForceToCenter(brakeForce, 0, true);
 		}
+		
+		if(xVel > maxSpeed)
+			this.setLinearVelocity(maxSpeed, yVel);
+		else if(xVel < -maxSpeed)
+			this.setLinearVelocity(-maxSpeed, yVel);
 
 
 		if(yVel < -1)
@@ -66,12 +75,14 @@ public class Player extends Entity implements InputProcessor{
 			else
 				setImage(tL);
 		}
+		
+
 	}
 
 	@Override
 	protected Shape createShape() {
 		PolygonShape shape = new PolygonShape();
-		shape.setAsBox(getWidth()/ WORLDSCALE / 2f,getHeight() / WORLDSCALE /2f);
+		shape.setAsBox(WIDTH/ WORLDSCALE / 2f,HEIGHT / WORLDSCALE /2f);
 		return shape;
 	}
 
@@ -81,15 +92,9 @@ public class Player extends Entity implements InputProcessor{
 		fixtureDef.shape = shape;
 		fixtureDef.density = 10f; 
 		fixtureDef.friction = 0f;
-		fixtureDef.filter.groupIndex = 5;
+		fixtureDef.filter.categoryBits = CATEGORY_PLAYER;
+		fixtureDef.filter.maskBits = ~CATEGORY_PLAYER;
 		return fixtureDef;
-	}
-
-	@Override
-	protected BodyDef createBodyDef() {
-		BodyDef bodyDef = new BodyDef();
-		bodyDef.type = BodyType.DynamicBody;
-		return bodyDef;
 	}
 
 	public void setLeftMove(boolean m){
@@ -160,4 +165,6 @@ public class Player extends Entity implements InputProcessor{
 	public boolean scrolled(int amount) {
 		return false;
 	}
+
+
 }

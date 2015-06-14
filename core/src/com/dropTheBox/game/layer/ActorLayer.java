@@ -7,30 +7,35 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.ChainShape;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Pools;
 import com.dropTheBox.game.Camera;
 import com.dropTheBox.game.actor.Base;
-import com.dropTheBox.game.actor.platform.NormalPlatform;
+import com.dropTheBox.game.actor.item.Coin;
+import com.dropTheBox.game.actor.platform.Platform;
 import com.dropTheBox.game.actor.player.Player;
 import com.dropTheBox.scene.GameScene;
 import com.dropTheBox.scene.GameScene.GameState;
 
 public class ActorLayer extends Layer {
-	public final World world;
-	
+	public final World world;	
 	private Camera camera;
+	private Player player;
 	
 
 	//private final FloorManager floorManager;
 	
 	
 	//TODO remove these
-	Player player;
 	Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
 	OrthographicCamera pcamera;
 	
@@ -48,23 +53,19 @@ public class ActorLayer extends Layer {
 		//floorManager = new FloorManager(this);
 		
 		
+		createBorder();
 		pcamera = new OrthographicCamera(getWidth(),getHeight());
-        pcamera.position.set(pcamera.viewportWidth / 2f, pcamera.viewportHeight / 2f, 0); 
+        pcamera.position.set(pcamera.viewportWidth / 2f / Base.WORLDSCALE, pcamera.viewportHeight / 2f / Base.WORLDSCALE, 0); 
+        pcamera.zoom = 3 / Base.WORLDSCALE;
         pcamera.update();
         
-		
 		player = new Player(this);
-		player.init(320, 400);
-		player.setRotation(90);
+		player.init(180 - Player.WIDTH/2, 500);
 		
+		Platform p = new Platform(this);
+		p.init(0,0,100f, 100f);
+		p.setRotation(90);
 
-		
-		NormalPlatform p = new NormalPlatform(this);
-		p.init(-100,0,100f);
-		
-
-		NormalPlatform p1 = new NormalPlatform(this);
-		p1.init(100f,0,260f);
 	}
 
 	@Override
@@ -107,6 +108,17 @@ public class ActorLayer extends Layer {
 	public Camera getCamera(){
 		return camera;
 	}
+	
+	protected void createBorder(){
+		 Body border = world.createBody(new BodyDef());
+		 ChainShape shape = new ChainShape();
+		 shape.createLoop(new float[]{0,0, getWidth() / Base.WORLDSCALE, 0, getWidth() / Base.WORLDSCALE, getHeight() / Base.WORLDSCALE, 0, getHeight() / Base.WORLDSCALE});
+		 Fixture fixture = border.createFixture(shape, 1);
+		 fixture.setSensor(true);
+		 fixture.getFilterData().categoryBits = 0x0000; //TODO no idea
+		 fixture.getFilterData().maskBits = ~0x0000;
+		 shape.dispose();
+	}
 }
 
 
@@ -131,6 +143,7 @@ class Load{
 		am.load("game/bronzeCoin.png", Texture.class);
 		am.load("game/silverCoin.png", Texture.class);
 		am.load("game/goldCoin.png", Texture.class);
+		am.load("game/platform.png", Texture.class);
 		while(!am.update());
 	}
 }
