@@ -23,9 +23,10 @@ public abstract class Base extends com.badlogic.gdx.scenes.scene2d.Actor impleme
 	public static final short CATEGORY_PLATFORM = 0x0002;
 	public static final short CATEGORY_ITEM = 0x0004;
 	public static final short CATEGORY_ENTITY = 0x0008;
-	public static final short CATEFORY_WHATEVER = 0x0010;
+	public static final short CATEGORY_WHATEVER = 0x0010;
+	public static final short CATEGORY_WHEEL = (short)0x8000;
 	
-	public static final float WORLDSCALE = 20f; 
+	public static final float WORLDSCALE = 100f; 
 
 	private final ActorLayer layer;
 	private final Body body;
@@ -267,10 +268,24 @@ public abstract class Base extends com.badlogic.gdx.scenes.scene2d.Actor impleme
 	public void setAwake(boolean awake){
 		body.setAwake(awake);
 	}
+	
+	public void setSleepingAllowed(boolean flag){
+		body.setSleepingAllowed(flag);
+	}
 
 	public void setType(BodyType type){
 		body.setType(type);
 	}
+	
+	public BodyType getType(){
+		return body.getType();
+	}
+	
+	public void setRotationAllowed(boolean flag){
+		body.setFixedRotation(flag);
+	}
+
+	
 	public Fixture createFixture(FixtureDef def){
 		return body.createFixture(def);
 	}

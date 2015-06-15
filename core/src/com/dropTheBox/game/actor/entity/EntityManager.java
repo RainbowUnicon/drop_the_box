@@ -4,25 +4,26 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Pool;
+import com.dropTheBox.game.actor.Base2;
 import com.dropTheBox.game.actor.item.Item;
 import com.dropTheBox.game.layer.ActorLayer;
 
 public class EntityManager implements Disposable{
 	private final ActorLayer layer;
-	private final Pool<Entity> entityPool;
+	private final Pool<Base2> entityPool;
 
-	private final Array<Entity> entityList;
+	private final Array<Base2> entityList;
 	
 	public EntityManager(ActorLayer _layer){
 		layer = _layer;
 
-		entityPool = new Pool<Entity>(){
+		entityPool = new Pool<Base2>(){
 			@Override
-			protected Entity newObject() {
+			protected Base2 newObject() {
 				return null; //TODO fix
 			}};
 		
-			entityList = new Array<Entity>();
+			entityList = new Array<Base2>();
 	}
 	
 	public void destroyAbove(float desPoint){
@@ -36,7 +37,7 @@ public class EntityManager implements Disposable{
 
 	@Override
 	public void dispose() {
-		for(Entity entity: entityList)
+		for(Base2 entity: entityList)
 			entity.dispose();
 	}
 }

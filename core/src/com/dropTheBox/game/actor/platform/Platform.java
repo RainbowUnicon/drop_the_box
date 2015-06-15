@@ -7,41 +7,34 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.utils.Array;
 import com.dropTheBox.game.actor.Base;
-import com.dropTheBox.game.actor.entity.Entity;
+import com.dropTheBox.game.actor.Base2;
 import com.dropTheBox.game.actor.item.Item;
 import com.dropTheBox.game.layer.ActorLayer;
 import com.dropTheBox.utils.ShapeTransformer;
 
-public class Platform extends Entity{
+public class Platform extends Base2{
 	public static final float BUFFER_WIDTH = 100;
 	private Array<Item> itemList;
 	private Array<Vector2> distanceList;
-	private Fixture leftFixture, rightFixture;
+	
 	
 	public Platform(ActorLayer layer) {
 		super(layer);
+		this.setName("platform");
 		itemList = new Array<Item>();
 		distanceList = new Array<Vector2>();
 		this.setType(BodyType.KinematicBody);
 		this.setImage(new TextureRegion(getLayer().getAssets().get("game/platform.png",Texture.class)));
 		
-		this.destroyFixture(fixture2);
-		fixture2 = null;
 		
-		Shape bufferShape = createShape();
-		FixtureDef def = createFixtureDef(bufferShape);
-		leftFixture = createFixture(def);
-		rightFixture = createFixture(def);
-		leftFixture.setUserData(this);
-		rightFixture.setUserData(this);
-		moveBuffer(getLayer().getWidth(), 0);
-		bufferShape.dispose();
+		
 	}
 	
 	@Override
@@ -62,127 +55,12 @@ public class Platform extends Entity{
 		super.act(dt);
 		if(!isAwake()) return;
 		arrangeItem();
-		rotateBuffer(getRotation());
 	}
-	
-	@Override
-	protected void touchingLeftWall(){
-		if(getScaledX() <= -getScaledWidth()){
-			this.setPosition(getLayer().getWidth() + getX(), getY());
-		}
-	}
-	
-	
-	
-	@Override
-	protected void touchingRightWall(){
-		if(getScaledX() >= getLayer().getWidth())
-			this.setPosition(getX() - getLayer().getWidth(), getY());
-	}
-	
-	@Override
-	protected void touchingNone(){};
-
-	@Override
-	public void sizeBy(float x, float y) {
-		float tempX = xD;
-		float tempY = yD;
-		moveBuffer(-tempX, -tempY);
-		super.sizeBy(x, y);
-		moveBuffer(tempX, tempY);
-	}
-
 	
 	@Override
 	public void setSize(float w, float h){
-		float tempX = xD;
-		float tempY = yD;
-		moveBuffer(-tempX, -tempY);
-		super.setSize(w, h);
-		moveBuffer(tempX, tempY);
-	}
-	
-	@Override
-	public void setWidth(float w){
-		float tempX = xD;
-		float tempY = yD;
-		moveBuffer(-tempX, -tempY);
-		super.setWidth(w);
-		moveBuffer(tempX, tempY);
-	}
-	
-	@Override
-	public void setHeight(float h){
-		float tempX = xD;
-		float tempY = yD;
-		moveBuffer(-tempX, -tempY);
-		super.setHeight(h);
-		moveBuffer(tempX, tempY);
-	}
-	
-	@Override
-	public void rotateBy(float d){
-		rotateBuffer(getRotation() + d);
-		super.setRotation(d);
-	}
-	
-	@Override
-	public void setRotation(float d){
-		super.setRotation(d);
-		rotateBuffer(d);
-	}
-	
-	//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-	
-	@Override 
-	public void setScale(float a){
-		throw new UnsupportedOperationException();
-	}
-	
-	@Override
-	public void scaleBy(float scale) {
-		throw new UnsupportedOperationException();
-	}
+		super.setSize(w,h);
 
-	@Override
-	public void scaleBy(float scaleX, float scaleY) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void setScale(float scaleX, float scaleY) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void setScaleX(float scaleX) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void setScaleY(float scaleY) {
-		throw new UnsupportedOperationException();
-	}
-
-	//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-
-
-	private float xD, yD;
-	protected void moveBuffer(float x, float y){
-		xD = x;
-		yD = y;
-		ShapeTransformer.translate(leftFixture.getShape(), -(xD) / WORLDSCALE, -(yD) / WORLDSCALE);
-		ShapeTransformer.translate(rightFixture.getShape(), (xD) / WORLDSCALE, (yD) / WORLDSCALE);
-	}
-	
-	protected void rotateBuffer(float d){
-		ShapeTransformer.translate(leftFixture.getShape(), (xD) / WORLDSCALE, (yD) / WORLDSCALE);
-		ShapeTransformer.translate(rightFixture.getShape(), -(xD) / WORLDSCALE, -(yD) / WORLDSCALE);
-		float distance = getLayer().getWidth();
-		xD =  (float)(distance * Math.cos(Math.toRadians(getRotation())));
-		yD = -(float)(distance * Math.sin(Math.toRadians(getRotation())));
-		ShapeTransformer.translate(leftFixture.getShape(), -xD /WORLDSCALE, -yD / WORLDSCALE);
-		ShapeTransformer.translate(rightFixture.getShape(), xD /WORLDSCALE, yD / WORLDSCALE);
 	}
 	
 	

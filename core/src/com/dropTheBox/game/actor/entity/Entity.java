@@ -1,86 +1,82 @@
 package com.dropTheBox.game.actor.entity;
 
-import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.Shape;
-import com.dropTheBox.game.actor.Base;
+import com.dropTheBox.game.actor.Base2;
 import com.dropTheBox.game.layer.ActorLayer;
 import com.dropTheBox.utils.ShapeTransformer;
 
-public abstract class Entity extends Base {
-	protected Fixture fixture1, fixture2;
-
+public abstract class Entity extends Base2 {
+	public static float WHEEL_RAIDUS = 20;
+	private Fixture leftDownWheelFixture , rightDownWheelFixture, leftUpWheelFixture, rightUpWheelFixture;
+	private float xD, yD;
+	
 	public Entity(ActorLayer _layer) {
 		super(_layer);
-		this.setName("entity");
-		Shape shape = createShape();
-		fixture1 = createFixture(createFixtureDef(shape));
-		fixture2 = createFixture(createFixtureDef(shape));
-		fixture1.setUserData(this);
-		fixture2.setUserData(this);
+		CircleShape shape = new CircleShape();
+		shape.setRadius(WHEEL_RAIDUS / WORLDSCALE / 2f);
+		FixtureDef def = createWheelFixtureDef(shape);
+		leftDownWheelFixture = createFixture(def);
+		rightDownWheelFixture = createFixture(def);
+		leftDownWheelFixture.setDensity(10f);
+		rightDownWheelFixture.setDensity(10f);
+		leftUpWheelFixture = createFixture(def);
+		rightUpWheelFixture = createFixture(def);
 		shape.dispose();
 	}
-
-	@Override
-	public void draw(Batch batch, float parentAlpha) {
-		super.draw(batch, parentAlpha);
-		if(isTouchingLeftWall())
-			drawImageAt(batch,getX() + getLayer().getWidth(), getY());
-		else if(isTouchingRightWall())
-			drawImageAt(batch, getX() - getLayer().getWidth(), getY());
-	}
-
-	
 	
 	@Override
-	public void act(float dt){
-		super.act(dt);
-		if(!isAwake()) return;
-		if(isTouchingLeftWall())
-			touchingLeftWall();
-		else if(isTouchingRightWall())
-			touchingRightWall();
-		else if (xD != 0 || yD != 0)
-			touchingNone();
-	} 
+	public void setSize(float w, float h){
+		moveWheel(-xD, -yD);
+		super.setSize(w, h);
+		float diameter = w / WORLDSCALE / 2f;
+		ShapeTransformer.resize(leftDownWheelFixture.getShape(), diameter );
+		ShapeTransformer.resize(rightDownWheelFixture.getShape(),  diameter);
+		ShapeTransformer.resize(leftUpWheelFixture.getShape(), diameter );
+		ShapeTransformer.resize(rightUpWheelFixture.getShape(),  diameter);
+		moveWheel(w / WORLDSCALE / 4f, -h/ WORLDSCALE /4f);
+	}
+	
 
-	protected boolean isTouchingLeftWall(){
-		return (getScaledX() < 0);
-	}
+	
 
-	protected boolean isTouchingRightWall(){
-		return (getScaledX() + getScaledWidth() > getLayer().getWidth());
+	
+	
+	
+	
+	private void moveWheel(float xPos, float yPos){
+		xD = xPos;
+		yD = yPos;
+		ShapeTransformer.translate(leftDownWheelFixture.getShape(), -xPos, yPos);
+		ShapeTransformer.translate(rightDownWheelFixture.getShape(), xPos, yPos);
+		ShapeTransformer.translate(leftUpWheelFixture.getShape(), -xPos, -yPos);
+		ShapeTransformer.translate(rightUpWheelFixture.getShape(), xPos, -yPos);
 	}
 	
-	protected void touchingLeftWall(){
-		translateFixture(1);
-		if(getScaledX() <= -getScaledWidth()){
-			this.setPosition(getLayer().getWidth() + getX(), getY());
-		}
-	}
-	
-	protected void touchingRightWall(){
-		translateFixture(-1);
-		if(getScaledX() >= getLayer().getWidth())
-			this.setPosition(getX() - getLayer().getWidth(), getY());
-	}
-	
-	protected void touchingNone(){
-		translateFixture(0);
-	}
-
-	private float xD, yD;
-	private void translateFixture(int gap){
-		ShapeTransformer.translate(fixture2.getShape(), -xD / WORLDSCALE, -yD / WORLDSCALE);
-		float distance = gap * getLayer().getWidth();
-		xD =  (float)(distance * Math.cos(Math.toRadians(getRotation())));
-		yD = -(float)(distance * Math.sin(Math.toRadians(getRotation())));
-		ShapeTransformer.translate(fixture2.getShape(), xD /WORLDSCALE, yD / WORLDSCALE);
+	private void rotateWheel(float d){
+		ShapeTransformer.translate(leftDownWheelFixture.getShape(), (xD) / WORLDSCALE, (yD) / WORLDSCALE);
+		ShapeTransformer.translate(rightDownWheelFixture.getShape(), -(xD) / WORLDSCALE, -(yD) / WORLDSCALE);
+		ShapeTransformer.translate(leftUpWheelFixture.getShape(), (xD) / WORLDSCALE, (yD) / WORLDSCALE);
+		ShapeTransformer.translate(rightUpWheelFixture.getShape(), -(xD) / WORLDSCALE, -(yD) / WORLDSCALE);
+		xD =  (float)(xD * Math.cos(Math.toRadians(getRotation())) + yD * Math.sin(Math.toRadians(getRotation())));
+		yD = -(float)(-xD * Math.sin(Math.toRadians(getRotation())) + yD * Math.sin(Math.toRadians(getRotation())));
+		ShapeTransformer.translate(leftDownWheelFixture.getShape(), -xD /WORLDSCALE, -yD / WORLDSCALE);
+		ShapeTransformer.translate(rightDownWheelFixture.getShape(), xD /WORLDSCALE, yD / WORLDSCALE);
+		ShapeTransformer.translate(leftUpWheelFixture.getShape(), -xD /WORLDSCALE, -yD / WORLDSCALE);
+		ShapeTransformer.translate(rightUpWheelFixture.getShape(), xD /WORLDSCALE, yD / WORLDSCALE);
 	}
 	
 	
-	protected abstract Shape createShape();
-	protected abstract FixtureDef createFixtureDef(Shape shape);
+	protected FixtureDef createWheelFixtureDef(Shape shape) {
+		FixtureDef fixtureDef = new FixtureDef();
+		fixtureDef.shape = shape;
+		fixtureDef.density = 0f; 
+		fixtureDef.friction = 0f;
+		fixtureDef.filter.categoryBits = CATEGORY_WHEEL;
+		fixtureDef.filter.maskBits = CATEGORY_PLATFORM;
+		return fixtureDef;
+	}
 
 }

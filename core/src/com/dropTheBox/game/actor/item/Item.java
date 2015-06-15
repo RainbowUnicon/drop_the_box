@@ -3,10 +3,10 @@ package com.dropTheBox.game.actor.item;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.Shape;
-import com.dropTheBox.game.actor.entity.Entity;
+import com.dropTheBox.game.actor.Base2;
 import com.dropTheBox.game.layer.ActorLayer;
 
-public abstract class Item extends Entity {
+public abstract class Item extends Base2 {
 	private boolean isActivated;
 	
 	public Item(ActorLayer _layer) {

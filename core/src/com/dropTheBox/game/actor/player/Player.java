@@ -6,12 +6,16 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
+import com.dropTheBox.game.actor.Base2;
 import com.dropTheBox.game.actor.entity.Entity;
 import com.dropTheBox.game.layer.ActorLayer;
 import com.dropTheBox.scene.GameScene.GameState;
+import com.dropTheBox.utils.ShapeTransformer;
 
 public class Player extends Entity implements InputProcessor{
 	public static final int WIDTH = 40, HEIGHT = 40;
@@ -19,24 +23,26 @@ public class Player extends Entity implements InputProcessor{
 	
 	private boolean leftMove, rightMove;
 	private float maxSpeed, brakeForce, accelForce;
+
 	
 	public Player(ActorLayer layer) {
 		super(layer);
+		this.setType(BodyType.DynamicBody);
+		this.setName("player");
 	}
 	
 	public void init(float x, float y){
 		super.init(x, y, WIDTH, HEIGHT);
-		setType(BodyType.DynamicBody);
+		
 
 		tR = new TextureRegion(getLayer().getAssets().get("game/player_r.png", Texture.class));
 		tF = new TextureRegion(getLayer().getAssets().get("game/player_f.png", Texture.class));
 		tL = new TextureRegion(getLayer().getAssets().get("game/player_l.png", Texture.class));
 		setImage(tR);
 		
-		brakeForce = 5000;
-		accelForce = 1000;
-		maxSpeed = 1000;
-		
+		brakeForce = 250;
+		accelForce = 50;
+		maxSpeed = 400;
 	}
 
 
@@ -46,6 +52,8 @@ public class Player extends Entity implements InputProcessor{
 		float xVel = getXVelocity();
 		float yVel = getYVelocity();
 		
+		//TODO remove this
+		this.setZIndex(Integer.MAX_VALUE);
 		
 		if(leftMove){
 			if(xVel <0)
@@ -76,13 +84,17 @@ public class Player extends Entity implements InputProcessor{
 				setImage(tL);
 		}
 		
-
+		if(getRotation() > 30){
+			setRotation(30);
+		}
+		if(getRotation() < -30)
+			setRotation(-30);
 	}
 
 	@Override
 	protected Shape createShape() {
-		PolygonShape shape = new PolygonShape();
-		shape.setAsBox(WIDTH/ WORLDSCALE / 2f,HEIGHT / WORLDSCALE /2f);
+		CircleShape shape = new CircleShape();
+		shape.setRadius(WIDTH / WORLDSCALE / 2f);
 		return shape;
 	}
 
