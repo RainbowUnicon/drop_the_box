@@ -7,5 +7,6 @@ public class StoreScene extends StagedScene {
 	
 	public StoreScene(DropTheBox _dtb){
 		dtb = _dtb;
+		dtb.hashCode(); //TODO remove this line
 	}
 }

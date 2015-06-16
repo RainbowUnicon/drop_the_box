@@ -19,16 +19,14 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Pools;
 import com.dropTheBox.game.Camera;
-import com.dropTheBox.game.actor.Base;
-import com.dropTheBox.game.actor.TestBase;
-import com.dropTheBox.game.actor.entity.Crate;
-import com.dropTheBox.game.actor.item.Coin;
-import com.dropTheBox.game.actor.platform.Platform;
-import com.dropTheBox.game.actor.player.Player;
+import com.dropTheBox.game.entity.Platform;
+import com.dropTheBox.game.entity.actor.Crate;
+import com.dropTheBox.game.entity.item.Coin;
+import com.dropTheBox.game.entity.player.Player;
 import com.dropTheBox.scene.GameScene;
 import com.dropTheBox.scene.GameScene.GameState;
+import com.dropTheBox.utils.Base;
 
 public class ActorLayer extends Layer {
 	public final World world;	
@@ -36,13 +34,12 @@ public class ActorLayer extends Layer {
 	private Player player;
 
 
-	//private final FloorManager floorManager;
+	//private final LevelManager levelManager;
 
 
 	//TODO remove these
 	Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
 	OrthographicCamera pcamera;
-	Platform p;
 
 	public ActorLayer(GameScene scene){
 		super(scene, new SpriteBatch());
@@ -51,44 +48,32 @@ public class ActorLayer extends Layer {
 		camera = new Camera(getWidth(), getHeight());
 
 		stage.getViewport().setCamera(camera);
-		world = new World(new Vector2(0, -25), true);
+		world = new World(new Vector2(0, -50), true);
 		world.setContactListener(new MyContactListener());
 
 
-		//floorManager = new FloorManager(this);
-
+		//levelManager = new LevelManager(this);
+		
 
 		createBorder();
 		pcamera = new OrthographicCamera(getWidth(),getHeight());
 		pcamera.position.set(pcamera.viewportWidth / 2f / Base.WORLDSCALE, pcamera.viewportHeight / 2f / Base.WORLDSCALE, 0); 
-		pcamera.zoom = 4f / Base.WORLDSCALE;
+		pcamera.zoom = 3f / Base.WORLDSCALE;
 		pcamera.update();
 
 		player = new Player(this);
 		player.init(182, 500);
-		player.setRotation(45);
+	
 
 		
-		p = new Platform(this);
+		
+		
+		Platform p = new Platform(this);
 		p.init(0,0,360f, 20f);
+		
+		Coin c = new Coin(this);
+		c.init(20, 20, Coin.GOLD);
 
-		Platform p1 = new Platform(this);
-		p1.init(30,80,300f, 20f);
-		
-		Platform p2 = new Platform(this);
-		p2.init(90,160,300f, 20f);
-		
-		Platform p3 = new Platform(this);
-		p3.init(150,240,300f, 20f);
-		
-		Platform p4 = new Platform(this);
-		p4.init(210,320,300f, 20f);
-		
-		Platform p5 = new Platform(this);
-		p5.init(270,400,300f, 20f);
-		
-		Platform p6 = new Platform(this);
-		p6.init(330,480,300f, 20f);
 	}
 
 	@Override
@@ -96,7 +81,7 @@ public class ActorLayer extends Layer {
 		if(getState() == GameState.Running){
 			camera.update(dt);
 			world.step(dt, 6, 2);
-			//floorManager.update(dt);
+			//levelManager.act(dt);
 			stage.act(dt);
 		}
 	}
@@ -106,7 +91,7 @@ public class ActorLayer extends Layer {
 		GameState state = getState();		
 		if(state == GameState.Running || state == GameState.CountDown || state == GameState.Pause)
 			stage.draw();
-		debugRenderer.render(world, pcamera.combined);
+		//debugRenderer.render(world, pcamera.combined);
 		stage.getBatch().flush();
 	}
 
@@ -123,7 +108,7 @@ public class ActorLayer extends Layer {
 	@Override
 	public void dispose(){
 		super.dispose();
-		//floorManager.dispose();
+		//levelManager.dispose();
 	}
 
 	public Camera getCamera(){

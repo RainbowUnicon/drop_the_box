@@ -29,7 +29,7 @@ public class ScoreBoard extends Label{
 	
 	private static final LabelStyle createStyle(AssetManager man){
 		LabelStyle style = new LabelStyle();
-		style.font = man.get("Rg24.ttf", BitmapFont.class);
+		style.font = man.get("Rlg32.ttf", BitmapFont.class);
 		return style;
 	}
 

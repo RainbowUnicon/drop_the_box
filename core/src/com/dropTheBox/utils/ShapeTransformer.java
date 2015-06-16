@@ -8,28 +8,30 @@ import com.badlogic.gdx.utils.Pools;
 
 public class ShapeTransformer {
 	
-	public static void resize(Shape shape, float... length){
+	private ShapeTransformer(){}
+	
+	public static void setSize(Shape shape, float... length){
 		if(shape instanceof CircleShape)
 			shape.setRadius(length[0]  / 2f);
 		else if(shape instanceof PolygonShape)
 			resizePolygon((PolygonShape) shape, length[0], length[1]);
 	}
 	
-	public static void scale(Shape shape, float... s){
+	public static void setScale(Shape shape, float... scale){
 		if(shape instanceof CircleShape)
-			shape.setRadius(shape.getRadius() / s[0]);
+			shape.setRadius(shape.getRadius() / scale[0]);
 		else if(shape instanceof PolygonShape)
-			scalePolygon((PolygonShape) shape, s[0], s[1]);
+			scalePolygon((PolygonShape) shape, scale[0], scale[1]);
 	}
 	
-	public static void translate(Shape shape, float xPos, float yPos){
+	public static void setPosition(Shape shape, float xPos, float yPos){
 		if(shape instanceof CircleShape)
 			((CircleShape) shape).setPosition(new Vector2(xPos , yPos ));
 		else if(shape instanceof PolygonShape)
 			translatePolygon((PolygonShape) shape, xPos, yPos);
 	}
 
-	public static void resizePolygon(PolygonShape shape, float w, float h){
+	private static void resizePolygon(PolygonShape shape, float w, float h){
 		float minX = Float.MAX_VALUE;
 		float minY = Float.MAX_VALUE;
 		float maxX = 0;
@@ -46,7 +48,7 @@ public class ShapeTransformer {
 		scalePolygon(shape,w / (maxX - minX) , h / (maxY - minY));
 	}
 
-	public static void scalePolygon(PolygonShape shape, float scaleX , float scaleY){
+	private static void scalePolygon(PolygonShape shape, float scaleX , float scaleY){
 		int numV = shape.getVertexCount();
 		float[] vertices = new float[numV * 2];
 		Vector2 vertex = Pools.obtain(Vector2.class);
@@ -58,7 +60,7 @@ public class ShapeTransformer {
 		shape.set(vertices);
 	}
 	
-	public static void translatePolygon(PolygonShape shape, float xPos, float yPos){
+	private static void translatePolygon(PolygonShape shape, float xPos, float yPos){
 		int numV = shape.getVertexCount();
 		float[] vertices = new float[numV *2];
 		Vector2 vertex = Pools.obtain(Vector2.class);

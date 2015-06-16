@@ -13,8 +13,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.dropTheBox.DropTheBox;
+import com.dropTheBox.Settings;
 import com.dropTheBox.scene.utils.MySlider;
-import com.dropTheBox.utils.GenSettings;
 
 public class SettingsScene extends StagedScene {
 	private final DropTheBox dtb;
@@ -25,7 +25,7 @@ public class SettingsScene extends StagedScene {
 	public SettingsScene(DropTheBox _dtb){
 		dtb = _dtb;
 		AssetManager assMan = dtb.getAssMan();
-		GenSettings settings = dtb.getSettings();
+		Settings settings = dtb.getSettings();
 		
 		//Listener
 		Listener listener = new Listener();
@@ -84,7 +84,7 @@ public class SettingsScene extends StagedScene {
 		@Override
 		public void clicked(InputEvent event, float x, float y){
 			Actor actor = event.getListenerActor();
-			GenSettings settings = dtb.getSettings();
+			Settings settings = dtb.getSettings();
 
 			if(actor == accSlider)
 				settings.setAccelSen((int)accSlider.getValue());

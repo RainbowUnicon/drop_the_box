@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.dropTheBox.DropTheBox;
-import com.dropTheBox.utils.LoadAssets;
+import com.dropTheBox.scene.utils.LoadAssets;
 
 public class LogoScene extends StagedScene {
 	private final DropTheBox dtb;
