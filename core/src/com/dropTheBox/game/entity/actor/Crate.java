@@ -3,9 +3,11 @@ package com.dropTheBox.game.entity.actor;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
+import com.badlogic.gdx.utils.Pools;
 import com.dropTheBox.game.entity.Entity;
 import com.dropTheBox.game.layer.ActorLayer;
 
@@ -23,9 +25,7 @@ public class Crate extends Entity {
 
 	@Override
 	protected Shape createShape() {
-		PolygonShape shape = new PolygonShape();
-		shape.setAsBox(WIDTH/ WORLDSCALE / 2f,HEIGHT / WORLDSCALE /2f);
-		return shape;
+		return Pools.obtain(CircleShape.class);
 	}
 
 	@Override

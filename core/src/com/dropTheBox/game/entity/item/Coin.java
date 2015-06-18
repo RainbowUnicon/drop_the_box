@@ -8,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.scenes.scene2d.actions.RemoveActorAction;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Pools;
 import com.dropTheBox.game.entity.Item;
 import com.dropTheBox.game.entity.player.Player;
 import com.dropTheBox.game.layer.ActorLayer;
@@ -62,12 +63,17 @@ public class Coin extends Item {
 	}
 	
 
-
+	
 
 
 	@Override
 	public void activate() {
 		getLayer().getDisplayLayer().getScoreBoard().addScore(coinType);
+	}
+	
+	@Override
+	protected Shape createShape() {
+		return Pools.obtain(CircleShape.class);
 	}
 
 }

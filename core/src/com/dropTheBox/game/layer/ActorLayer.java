@@ -1,5 +1,6 @@
 package com.dropTheBox.game.layer;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.assets.AssetManager;
@@ -19,10 +20,9 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Pools;
 import com.dropTheBox.game.Camera;
-import com.dropTheBox.game.entity.Platform;
-import com.dropTheBox.game.entity.actor.Crate;
-import com.dropTheBox.game.entity.item.Coin;
+import com.dropTheBox.game.LevelManager;
 import com.dropTheBox.game.entity.player.Player;
 import com.dropTheBox.scene.GameScene;
 import com.dropTheBox.scene.GameScene.GameState;
@@ -34,7 +34,7 @@ public class ActorLayer extends Layer {
 	private Player player;
 
 
-	//private final LevelManager levelManager;
+	private final LevelManager levelManager;
 
 
 	//TODO remove these
@@ -43,36 +43,33 @@ public class ActorLayer extends Layer {
 
 	public ActorLayer(GameScene scene){
 		super(scene, new SpriteBatch());
+		
+		Gdx.app.log("Drop The Box", "Loading asset for game");
 		Load.load(getAssets());
 
+		Gdx.app.log("Drop The Box", "Creating Stage");
 		camera = new Camera(getWidth(), getHeight());
-
 		stage.getViewport().setCamera(camera);
+
+		Gdx.app.log("Drop The Box", "Creating World");
 		world = new World(new Vector2(0, -50), true);
 		world.setContactListener(new MyContactListener());
-
-
-		//levelManager = new LevelManager(this);
 		
-
-		createBorder();
+		Gdx.app.log("Drop The Box", "Setting Level");
+		levelManager = new LevelManager(this);
+		
+		Gdx.app.debug("Drop The Box","Setting Debuggers for game");
 		pcamera = new OrthographicCamera(getWidth(),getHeight());
 		pcamera.position.set(pcamera.viewportWidth / 2f / Base.WORLDSCALE, pcamera.viewportHeight / 2f / Base.WORLDSCALE, 0); 
-		pcamera.zoom = 3f / Base.WORLDSCALE;
+		pcamera.zoom = 1f / Base.WORLDSCALE;
 		pcamera.update();
 
+		Gdx.app.log("Drop The Box", "Creating Player");
 		player = new Player(this);
 		player.init(182, 500);
-	
+		
 
 		
-		
-		
-		Platform p = new Platform(this);
-		p.init(0,0,360f, 20f);
-		
-		Coin c = new Coin(this);
-		c.init(20, 20, Coin.GOLD);
 
 	}
 
@@ -81,17 +78,19 @@ public class ActorLayer extends Layer {
 		if(getState() == GameState.Running){
 			camera.update(dt);
 			world.step(dt, 6, 2);
-			//levelManager.act(dt);
+			levelManager.act(dt);
+			pcamera.position.set(pcamera.viewportWidth / 2f / Base.WORLDSCALE, (pcamera.viewportHeight / 2f + camera.getY()) / Base.WORLDSCALE, 0); 
+			pcamera.update();
 			stage.act(dt);
 		}
 	}
 
 	@Override
 	public void draw() {
-		GameState state = getState();		
+		GameState state = getState();	
 		if(state == GameState.Running || state == GameState.CountDown || state == GameState.Pause)
 			stage.draw();
-		//debugRenderer.render(world, pcamera.combined);
+		this.debugRenderer.render(world, pcamera.combined);
 		stage.getBatch().flush();
 	}
 
@@ -108,22 +107,11 @@ public class ActorLayer extends Layer {
 	@Override
 	public void dispose(){
 		super.dispose();
-		//levelManager.dispose();
+		levelManager.dispose();
 	}
 
 	public Camera getCamera(){
 		return camera;
-	}
-
-	protected void createBorder(){
-		Body border = world.createBody(new BodyDef());
-		ChainShape shape = new ChainShape();
-		shape.createLoop(new float[]{0,0, getWidth() / Base.WORLDSCALE, 0, getWidth() / Base.WORLDSCALE, getHeight() / Base.WORLDSCALE, 0, getHeight() / Base.WORLDSCALE});
-		Fixture fixture = border.createFixture(shape, 1);
-		fixture.setSensor(true);
-		fixture.getFilterData().categoryBits = 0x0000; //TODO no idea
-		fixture.getFilterData().maskBits = ~0x0000;
-		shape.dispose();
 	}
 }
 
@@ -145,15 +133,13 @@ class Load{
 		am.load("game/crate.png",Texture.class, param);
 		am.load("game/item.png", Texture.class, param);
 		am.load("game/platform.png",Texture.class, param);
-		am.load("game/player_f.png", Texture.class, param);
-		am.load("game/player_l.png", Texture.class, param);
-		am.load("game/player_r.png", Texture.class, param);
 		am.load("game/mob_0.png", Texture.class, param);
 		am.load("game/minion_1.png", Texture.class, param);
 		am.load("game/bronzeCoin.png", Texture.class, param);
 		am.load("game/silverCoin.png", Texture.class, param);
 		am.load("game/goldCoin.png", Texture.class, param);
 		am.load("game/platform.png", Texture.class, param);
+		am.load("game/player.png", Texture.class, param);
 		while(!am.update());
 	}
 }
@@ -167,8 +153,8 @@ class MyContactListener implements ContactListener{
 		Object a = contact.getFixtureA().getUserData();
 		Object b = contact.getFixtureB().getUserData();
 		if(a == null | b == null) return;
-		((Base)a).beginContact(contact);
-		((Base)b).beginContact(contact);
+		((ContactListener)a).beginContact(contact);
+		((ContactListener)b).beginContact(contact);
 	}
 
 	@Override
@@ -177,8 +163,8 @@ class MyContactListener implements ContactListener{
 		Object b = contact.getFixtureB().getUserData();
 		if(a == null | b == null) return;
 		
-		((Base)a).endContact(contact);
-		((Base)b).endContact(contact);
+		((ContactListener)a).endContact(contact);
+		((ContactListener)b).endContact(contact);
 	}
 
 	@Override
@@ -187,8 +173,8 @@ class MyContactListener implements ContactListener{
 		Object b = contact.getFixtureB().getUserData();
 		if(a == null | b == null) return;
 		
-		((Base)a).preSolve(contact, oldManifold);
-		((Base)b).preSolve(contact, oldManifold);
+		((ContactListener)a).preSolve(contact, oldManifold);
+		((ContactListener)b).preSolve(contact, oldManifold);
 	}
 
 	@Override
@@ -196,7 +182,7 @@ class MyContactListener implements ContactListener{
 		Object a = contact.getFixtureA().getUserData();
 		Object b = contact.getFixtureB().getUserData();
 		if(a == null | b == null) return;
-		((Base)a).postSolve(contact, impulse);
-		((Base)b).postSolve(contact, impulse);
+		((ContactListener)a).postSolve(contact, impulse);
+		((ContactListener)b).postSolve(contact, impulse);
 	}
 }

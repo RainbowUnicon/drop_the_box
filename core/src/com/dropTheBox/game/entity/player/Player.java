@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.Shape;
+import com.badlogic.gdx.utils.Pools;
 import com.dropTheBox.game.entity.Actor;
 import com.dropTheBox.game.layer.ActorLayer;
 import com.dropTheBox.scene.GameScene.GameState;
@@ -16,28 +17,27 @@ import com.dropTheBox.scene.GameScene.GameState;
 public class Player extends Actor implements InputProcessor{
 	public static final int WIDTH = 40, HEIGHT = 40;
 	private TextureRegion tR, tL, tF;
-	
+
 	private boolean leftMove, rightMove;
 	private float maxSpeed, brakeForce, accelForce;
 
-	
+
 	public Player(ActorLayer layer) {
 		super(layer);
 		this.setName("player");
 		this.setType(BodyType.DynamicBody);
 	}
-	
+
 	public void init(float x, float y){
 		super.init(x, y, WIDTH, HEIGHT);
-		
 
-		tR = new TextureRegion(getLayer().getAssets().get("game/player_r.png", Texture.class));
-		tF = new TextureRegion(getLayer().getAssets().get("game/player_f.png", Texture.class));
-		tL = new TextureRegion(getLayer().getAssets().get("game/player_l.png", Texture.class));
+		tR = new TextureRegion(getLayer().getAssets().get("game/player.png", Texture.class),0,0,40,40);
+		tF = new TextureRegion(getLayer().getAssets().get("game/player.png", Texture.class),40,0,40,40);
+		tL = new TextureRegion(getLayer().getAssets().get("game/player.png", Texture.class),80,0,40,40);
 		setImage(tR);
-		
-		brakeForce = 2000;
-		accelForce = 500;
+
+		brakeForce = 600;
+		accelForce = 150;
 		maxSpeed = 300;
 	}
 
@@ -47,65 +47,56 @@ public class Player extends Actor implements InputProcessor{
 		super.act(dt);
 		float xVel = getXVelocity();
 		float yVel = getYVelocity();
-		
+
 		//TODO remove this
 		this.setZIndex(Integer.MAX_VALUE);
-		
-		if(leftMove){
-			if(xVel <0)
-				this.applyForceToCenter(-accelForce, 0, true);
-			else
-				this.applyForceToCenter(-brakeForce, 0, true);
-		}else if( rightMove && !leftMove){
-			if(xVel >0)
-				this.applyForceToCenter(accelForce, 0, true);
-			else
-				this.applyForceToCenter(brakeForce, 0, true);
+
+
+
+		if(isFlying()){
 		}
-		
+		else{
+			if(leftMove){
+				if(xVel <0)
+					this.applyForceToCenter(-accelForce, 0, true);
+				else
+					this.applyForceToCenter(-brakeForce, 0, true);
+			}else if( rightMove ){
+				if(xVel >0)
+					this.applyForceToCenter(accelForce, 0, true);
+				else
+					this.applyForceToCenter(brakeForce, 0, true);
+			}
+		}
+
 		if(xVel > maxSpeed)
 			this.setLinearVelocity(maxSpeed, yVel);
 		else if(xVel < -maxSpeed)
 			this.setLinearVelocity(-maxSpeed, yVel);
 
 
-		if(yVel < -1)
-			setImage(tL);
-		else{
-			if(xVel > 0)
-				setImage(tR);
-			else if(xVel == 0)
-				setImage(tF);
-			else
-				setImage(tL);
+
+		if(xVel > 0){
+			setImage(tR);
 		}
-		
+		else if(xVel < 0){
+			setImage(tL);
+		}
+		else{
+			setImage(tF);
+		}
+
+
 		if(getY() <= getLayer().getCamera().getY())
 			this.setY(getLayer().getCamera().getY());
-//		if(getRotation() > 30){
-//			setRotation(30);
-//		}
-//		if(getRotation() < -30)
-//			setRotation(-30);
+		//		if(getRotation() > 30){
+		//			setRotation(30);
+		//		}
+		//		if(getRotation() < -30)
+		//			setRotation(-30);
 	}
 
-	@Override
-	protected Shape createShape() {
-		CircleShape shape = new CircleShape();
-		shape.setRadius(WIDTH / WORLDSCALE / 2f);
-		return shape;
-	}
 
-	@Override
-	protected FixtureDef createFixtureDef(Shape shape) {
-		FixtureDef fixtureDef = new FixtureDef();
-		fixtureDef.shape = shape;
-		fixtureDef.density = 10f; 
-		fixtureDef.friction = 0f;
-		fixtureDef.filter.categoryBits = CATEGORY_PLAYER;
-		fixtureDef.filter.maskBits = ~CATEGORY_PLAYER;
-		return fixtureDef;
-	}
 
 	public void setLeftMove(boolean m){
 		leftMove = m;
@@ -114,7 +105,7 @@ public class Player extends Actor implements InputProcessor{
 	public void setRightMove(boolean m){
 		rightMove = m;
 	}
-	
+
 	@Override
 	public boolean keyDown(int keycode) {
 		if(getLayer().getState() == GameState.Running){if(keycode == Keys.A)
@@ -176,5 +167,19 @@ public class Player extends Actor implements InputProcessor{
 		return false;
 	}
 
+	@Override
+	protected Shape createShape() {
+		return Pools.obtain(CircleShape.class);
+	}
 
+	@Override
+	protected FixtureDef createFixtureDef(Shape shape) {
+		FixtureDef fixtureDef = new FixtureDef();
+		fixtureDef.shape = shape;
+		fixtureDef.density = 10f; 
+		fixtureDef.friction = 0f;
+		fixtureDef.filter.categoryBits = CATEGORY_PLAYER;
+		fixtureDef.filter.maskBits = ~CATEGORY_PLAYER;
+		return fixtureDef;
+	}
 }

@@ -23,7 +23,7 @@ public class LevelManager implements Disposable{
 
 	private final PlatformFactory platformFactory;
 	private final ItemFactory itemFactory;
-	private final EntityFactory entityFactory;
+	private final ActorFactory entityFactory;
 
 	private final Array<Base> actorList;
 
@@ -35,15 +35,15 @@ public class LevelManager implements Disposable{
 	public LevelManager(ActorLayer _layer){
 		layer = _layer;
 
-		layer.getCamera().setYVelocity(-180); //TODO remove magic number
+		layer.getCamera().setYVelocity(-75); //TODO remove magic number
 
-		entityFactory = new EntityFactory(layer);
+		entityFactory = new ActorFactory(layer);
 		platformFactory = new PlatformFactory(layer);
 		itemFactory = new ItemFactory(layer);
 
 		actorList = new Array<Base>();
 
-		pData = new Array<Float[]>(); //TODO remove thiss
+		pData = new Array<Float[]>(); //TODO remove this
 
 		next();
 		this.act(0);
@@ -59,8 +59,7 @@ public class LevelManager implements Disposable{
 			}
 			next();
 		}
-		actorList.add(Pools.obtain(Coin.class));
-
+		
 
 		float desPoint = this.getDestructionPoint();
 		int size = actorList.size;

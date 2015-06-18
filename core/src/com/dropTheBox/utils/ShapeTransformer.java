@@ -19,7 +19,7 @@ public class ShapeTransformer {
 	
 	public static void setScale(Shape shape, float... scale){
 		if(shape instanceof CircleShape)
-			shape.setRadius(shape.getRadius() / scale[0]);
+			shape.setRadius(shape.getRadius() * scale[0]);
 		else if(shape instanceof PolygonShape)
 			scalePolygon((PolygonShape) shape, scale[0], scale[1]);
 	}

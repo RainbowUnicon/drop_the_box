@@ -12,7 +12,7 @@ import com.dropTheBox.game.layer.ActorLayer;
 public abstract class Item extends Entity {
 	private boolean activated;
 	private Platform platform;
-	
+	float xGap, yGap;
 	
 	public Item(ActorLayer _layer) {
 		super(_layer);
@@ -28,7 +28,7 @@ public abstract class Item extends Entity {
 	@Override
 	public void reset(){
 		super.reset();
-		removeFromPlatform();
+		detachPlatform();
 	}
 
 	@Override
@@ -38,18 +38,19 @@ public abstract class Item extends Entity {
 	}
 	
 	
-	
 	public abstract void activate();
 	
 	
 	
-	public void removeFromPlatform(){
+	public void detachPlatform(){
 		if(platform == null) return;
-		platform.addItem(this);
+		platform.detachItem(this);
+		this.platform = null;
 	}
 	
-	public void addToPlatform(Platform platform){
-		platform.removeItem(this);
+	public void attachPlatform(Platform platform){
+		if(platform == null) throw new NullPointerException("Platform can't be null");
+		platform.attachItem(this);
 	}
 	
 	protected void setPlatform(Platform platform){
@@ -68,12 +69,7 @@ public abstract class Item extends Entity {
 	}
 	
 	
-	@Override
-	protected Shape createShape() {
-		CircleShape shape = new CircleShape();
-		shape.setRadius(40 / WORLDSCALE / 2f);
-		return shape;
-	}
+	
 	
 	@Override
 	protected FixtureDef createFixtureDef(Shape shape) {

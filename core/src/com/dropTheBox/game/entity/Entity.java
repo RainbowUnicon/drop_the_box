@@ -1,9 +1,11 @@
 package com.dropTheBox.game.entity;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.Shape;
+import com.badlogic.gdx.utils.Pools;
 import com.dropTheBox.game.layer.ActorLayer;
 import com.dropTheBox.utils.Base;
 import com.dropTheBox.utils.ShapeTransformer;
@@ -23,8 +25,6 @@ public abstract class Entity extends Base {
 	public Entity(ActorLayer layer) {
 		super(layer.world);
 		this.layer = layer;
-		layer.stage.addActor(this);
-		
 		this.setName("entity");
 		
 		Shape shape = createShape();
@@ -33,11 +33,21 @@ public abstract class Entity extends Base {
 		cFixture = createFixture(def);
 		rFixture = createFixture(def);
 		cFixture.setUserData(this);
-		shape.dispose();
+		Pools.free(shape);
 		
 		moveBuffer(layer.getWidth(), 0);
 	}
 	
+	
+	
+	@Override
+	protected void init(float xPos, float yPos, float width, float height) {
+		super.init(xPos, yPos, width, height);
+		layer.stage.addActor(this);
+	}
+
+
+
 	@Override
 	public void act(float dt){
 		super.act(dt);
@@ -70,9 +80,8 @@ public abstract class Entity extends Base {
 	}
 	
 	protected void touchingLeftWall(){
-		if(getScaledX() <= -getScaledWidth()){
+		if(getScaledX() <= -getScaledWidth())
 			this.setPosition(getLayer().getWidth() + getX(), getY());
-		}
 	}
 
 	protected void touchingRightWall(){
@@ -116,10 +125,47 @@ public abstract class Entity extends Base {
 		ShapeTransformer.setPosition(rFixture.getShape(), (prevGapX) / WORLDSCALE, (prevGapY) / WORLDSCALE);
 	}
 	
+	protected Fixture getCenterFixture(){
+		return cFixture;
+	}
+	
+	protected Fixture getLeftFixture(){
+		return lFixture;
+	}
+	
+	protected Fixture getRightFixture(){
+		return rFixture;
+	}
+	
 	public ActorLayer getLayer(){
 		return layer;
 	}
 
+	//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+	protected Platform extractPlatform(Contact contact){
+		return extract(contact, Platform.class);
+	}
+	
+	protected Actor extractActor(Contact contact){
+		return extract(contact, Actor.class);
+	}
+	
+	protected Item extractItem(Contact contact){
+		return extract(contact, Item.class);
+	}
+	
+	protected <T> T extract(Contact contact, Class<T> clazz){
+		if(contact == null || clazz == null) throw new NullPointerException();
+		
+		Object objectA = contact.getFixtureA().getUserData();
+		if(clazz.isInstance(objectA) && this != objectA) return (T) objectA;
+		Object objectB = contact.getFixtureB().getUserData();
+		if(clazz.isInstance(objectB) && this != objectB) return (T) objectB;
+		return null;
+	}
+	
+	//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+	
 	protected abstract Shape createShape();
 	protected abstract FixtureDef createFixtureDef(Shape shape);
 }

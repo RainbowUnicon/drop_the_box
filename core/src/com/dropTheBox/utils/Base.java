@@ -7,20 +7,27 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.ChainShape;
+import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
+import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
+import com.badlogic.gdx.utils.Pool;
+import com.badlogic.gdx.utils.Pools;
 import com.badlogic.gdx.utils.Pool.Poolable;
 
 public abstract class Base extends MyActor implements Poolable, ContactListener, Disposable{
 	public static final float WORLDSCALE = 100f; 
 
-	private final Body body;
+	private Body body;
 	private TextureRegion image;
 	private float prevScaleX = 1, prevScaleY = 1;
 
@@ -193,6 +200,10 @@ public abstract class Base extends MyActor implements Poolable, ContactListener,
 	public void destroyFixture(Fixture fixture){
 		body.destroyFixture(fixture);
 	}
+	
+	public Array<Fixture> getFixtureList(){
+		return body.getFixtureList();
+	}
 
 	//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
@@ -251,5 +262,43 @@ public abstract class Base extends MyActor implements Poolable, ContactListener,
 	
 	public static float convert(float n){
 		return n / WORLDSCALE;
+	}
+	
+	static{
+		Pools.set(CircleShape.class, new Pool<CircleShape>(){
+			@Override
+			protected CircleShape newObject() {
+				CircleShape shape = new CircleShape();
+				shape.setRadius(5 / WORLDSCALE);
+				return shape;
+			}
+		});
+		
+		Pools.set(PolygonShape.class, new Pool<PolygonShape>(){
+			@Override
+			protected PolygonShape newObject() {
+				PolygonShape shape = new PolygonShape();
+				shape.setAsBox(5 / WORLDSCALE, 5 / WORLDSCALE);
+				return shape;
+			}
+		});
+		
+		Pools.set(EdgeShape.class, new Pool<EdgeShape>(){
+			@Override
+			protected EdgeShape newObject() {
+				EdgeShape shape = new EdgeShape();
+				shape.set(0, 0, 10 / WORLDSCALE, 10 / WORLDSCALE);
+				return shape;
+			}
+		});
+		
+		Pools.set(ChainShape.class, new Pool<ChainShape>(){
+			@Override
+			protected ChainShape newObject() {
+				ChainShape shape = new ChainShape();
+				shape.createChain(new float[]{0,0,10f,10f});
+				return shape;
+			}
+		});
 	}
 }
