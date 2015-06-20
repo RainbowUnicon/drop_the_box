@@ -22,7 +22,7 @@ public abstract class Item extends Entity {
 	
 	protected void init(float x, float y,float d){
 		super.init(x, y, d, d);
-		activated = false;
+		this.activated = false;
 	}
 	
 	@Override

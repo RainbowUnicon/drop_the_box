@@ -43,6 +43,12 @@ public abstract class Actor extends Entity {
 	}
 	
 	@Override
+	public final void init(float xPos, float yPos, float width, float height){
+		super.init(xPos, yPos, width, height);
+	}
+		
+	
+	@Override
 	public void reset(){
 		super.reset();
 		contactingPlatformList.clear();

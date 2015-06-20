@@ -32,7 +32,7 @@ public class GameScene implements Scene {
 		currState = GameState.Running; //TODO change it to CountDown
 		
 		SpriteBatch batch = new SpriteBatch();
-		actorLayer = new ActorLayer(this);
+		actorLayer = new ActorLayer(this, batch);
 		backgroundLayer = new BackgroundLayer(this, batch);
 		displayLayer = new DisplayLayer(this, batch);
 		glassLayer = new GlassLayer(this, batch);
@@ -127,7 +127,7 @@ public class GameScene implements Scene {
 	}
 	
 	public enum GameState{
-		CountDown, Running, Win, Lose, Pause;
+		CountDown, Running, Pause;
 	}
 
 }

@@ -1,7 +1,9 @@
 package com.dropTheBox.game;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
+import com.dropTheBox.utils.Base;
 
 public class Camera extends OrthographicCamera {
 	private float aVel, xVel, yVel, xPos, yPos, angle;
@@ -81,6 +83,7 @@ public class Camera extends OrthographicCamera {
 	public void setY(float yPos) {
 		translate(0, yPos + this.viewportHeight/2);
 	}
+	
 
 	public float getAngle() {
 		return angle;
@@ -90,4 +93,8 @@ public class Camera extends OrthographicCamera {
 		rotate(angle);
 	}
 	
+	public void setTransform(float x, float y, float a){
+		translate(xPos + this.viewportWidth/2 , yPos + this.viewportHeight/2);
+		rotate(a);
+	}
 }

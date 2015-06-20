@@ -9,6 +9,8 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.Shape;
+import com.badlogic.gdx.scenes.scene2d.Action;
+import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.utils.Pools;
 import com.dropTheBox.game.entity.Actor;
 import com.dropTheBox.game.layer.ActorLayer;
@@ -37,8 +39,8 @@ public class Player extends Actor implements InputProcessor{
 		setImage(tR);
 
 		brakeForce = 600;
-		accelForce = 150;
-		maxSpeed = 300;
+		accelForce = 200;
+		maxSpeed = 400;
 	}
 
 
@@ -52,8 +54,12 @@ public class Player extends Actor implements InputProcessor{
 		this.setZIndex(Integer.MAX_VALUE);
 
 
-
 		if(isFlying()){
+			if(xVel > 0)
+				this.applyForceToCenter(-150, 0, true);
+			else if (xVel < 0)
+			this.applyForceToCenter(150, 0, true);
+
 		}
 		else{
 			if(leftMove){
@@ -85,8 +91,8 @@ public class Player extends Actor implements InputProcessor{
 		else{
 			setImage(tF);
 		}
-
-
+		
+		
 		if(getY() <= getLayer().getCamera().getY())
 			this.setY(getLayer().getCamera().getY());
 		//		if(getRotation() > 30){

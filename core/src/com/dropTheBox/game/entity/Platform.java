@@ -13,7 +13,7 @@ import com.badlogic.gdx.utils.ObjectSet;
 import com.badlogic.gdx.utils.Pools;
 import com.dropTheBox.game.layer.ActorLayer;
 
-public class Platform extends Entity{
+public abstract class Platform extends Entity{
 	public static final float BUFFER_WIDTH = 100;
 	private final Array<Item> itemList;
 	private final ObjectSet<Actor> contactingActorList; // actors that are on this platform
@@ -35,7 +35,7 @@ public class Platform extends Entity{
 
 
 	@Override
-	public void init(float x, float y, float w, float h){
+	protected void init(float x, float y, float w, float h){
 		super.init(x, y, w, h);
 		this.getImage().setRegion(0, 0, (int) w, (int) h);
 	}

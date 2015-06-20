@@ -111,6 +111,14 @@ public abstract class Base extends MyActor implements Poolable, ContactListener,
 	public void setLinearVelocity(float vX, float vY) {
 		body.setLinearVelocity(vX / WORLDSCALE, vY / WORLDSCALE);
 	}
+	
+	public void setXLinearVelocity(float vX){
+		body.setLinearVelocity(vX / WORLDSCALE, body.getLinearVelocity().y);
+	}
+	
+	public void setYLinearVelocity(float vY){
+		body.setLinearVelocity(body.getLinearVelocity().x , vY / WORLDSCALE);
+	}
 
 	public float getXVelocity() {
 		return body.getLinearVelocity().x * WORLDSCALE;

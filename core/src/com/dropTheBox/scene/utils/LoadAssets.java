@@ -2,9 +2,11 @@ package com.dropTheBox.scene.utils;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;
+import com.badlogic.gdx.assets.loaders.TextureLoader.TextureParameter;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader;
@@ -57,6 +59,20 @@ public final class LoadAssets {
 		assMan.load("Rg40.ttf", BitmapFont.class, createFreeTypeFontParameter("arimo/Arimo-Regular.ttf", 40, Color.GRAY));
 		assMan.load("Bg40.ttf", BitmapFont.class, createFreeTypeFontParameter("arimo/Arimo-Bold.ttf", 40, Color.GRAY));
 		assMan.load("Ig40.ttf", BitmapFont.class, createFreeTypeFontParameter("arimo/Arimo-Italic.ttf", 40, Color.GRAY));
+		
+	
+		assMan.load("background/test.png",Texture.class);
+		assMan.load("game/base.png",Texture.class);
+		assMan.load("game/crate.png",Texture.class);
+		assMan.load("game/item.png", Texture.class);
+		assMan.load("game/platform.png",Texture.class);
+		assMan.load("game/mob_0.png", Texture.class);
+		assMan.load("game/minion_1.png", Texture.class);
+		assMan.load("game/bronzeCoin.png", Texture.class);
+		assMan.load("game/silverCoin.png", Texture.class);
+		assMan.load("game/goldCoin.png", Texture.class);
+		assMan.load("game/platform.png", Texture.class);
+		assMan.load("game/player.png", Texture.class);
 	}
 
 	private static FreeTypeFontLoaderParameter createFreeTypeFontParameter(String fileName, int size, Color color){
